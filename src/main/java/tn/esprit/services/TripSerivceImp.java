@@ -27,10 +27,9 @@ public class TripSerivceImp implements ITripService {
 		return trip;
 	}
 
-	public Trip UpdateTrip(int idTrip, Trip trip) {
-		Trip OldTrip = tripRepository.getById(idTrip);
-		OldTrip = trip;
-		tripRepository.save(OldTrip);
+	public Trip UpdateTrip( Trip trip) {
+		
+		tripRepository.save(trip);
 		return trip;
 	}
 
