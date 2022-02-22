@@ -9,7 +9,7 @@ public interface IProgramSerivce {
 
 	public Program AddProgram(Program program);
 
-	public Program UpdateProgram(int idProgram,Program program);
+	public Program UpdateProgram(Program program);
 
 	public void DeleteProgram(Program program);
 
