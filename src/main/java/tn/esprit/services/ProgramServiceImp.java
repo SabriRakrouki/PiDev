@@ -33,12 +33,11 @@ public class ProgramServiceImp implements IProgramSerivce {
 	}
 
 	@Override
-	public Program UpdateProgram(int idProgram, Program program) {
+	public Program UpdateProgram(Program program) {
 
 		// TODO Auto-generated method stub
-		Program oldveProgram = programRepository.getById(idProgram);
-		oldveProgram = program;
-		programRepository.save(oldveProgram);
+		
+		programRepository.save(program);
 		return program;
 	}
 
