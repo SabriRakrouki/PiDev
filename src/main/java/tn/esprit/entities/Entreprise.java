@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,15 +29,17 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@DiscriminatorValue("Entreprise")
 public class Entreprise extends User implements Serializable {
-	
-private String resgistrationNumber;
-private String name;
-private int Capacity;
-@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-private Set<Domain> domains;
-
-
-@OneToMany(cascade = CascadeType.ALL)
-private Set<FeedBack> feedBacks;
+	@Column(unique = true)	
+	private String resgistrationNumber;
+	private String name;
+	private int Capacity;
+	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	private Set<Domain> domains;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprise")
+	@JsonIgnore
+	private Set<Employee> employees;
+	@OneToMany(cascade = CascadeType.ALL)
+	private Set<FeedBack> feedBacks;
 }

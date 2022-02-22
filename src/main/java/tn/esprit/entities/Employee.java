@@ -5,9 +5,11 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.UniqueConstraint;
 
@@ -23,6 +25,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@DiscriminatorValue("Employee")
 public class Employee extends User implements Serializable {
 	@Column(unique = true)
 	private String cin;
@@ -33,6 +36,6 @@ public class Employee extends User implements Serializable {
 	private Set<Position> positions;
 	@OneToOne
 	private Invitation invitation;
-	
-	
+	@ManyToOne
+	Entreprise entreprise;
 }
