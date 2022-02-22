@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +33,7 @@ public class Invitation implements Serializable {
 	private Date date;
 	@Enumerated(EnumType.STRING)
 	private State state;
-	@OneToOne
+	@OneToOne(mappedBy="invitation")
+	@JsonIgnore
 	private Employee employee;
 }
