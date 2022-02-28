@@ -9,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -36,4 +38,8 @@ public class Post implements Serializable {
 	private Set<Comment> comments;
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<Like> likes;
+	@ManyToOne
+	private User user;
+	@ManyToOne(cascade=CascadeType.ALL)
+	private Topic topic;
 }

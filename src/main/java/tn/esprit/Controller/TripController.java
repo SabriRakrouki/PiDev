@@ -37,6 +37,8 @@ public class TripController {
 	@ResponseBody
 	public Trip updateAdmin(@RequestBody Trip trip) {
 		iTripService.UpdateTrip(trip);
+		
+		
 		return trip;
 	}
 
@@ -44,6 +46,10 @@ public class TripController {
 	@ResponseBody
 	public ResponseEntity<List<Trip>> getAllTrip() {
 
+		
+		
+		
+		
 		return ResponseEntity.status(200).body(iTripService.getAllTrip());
 	}
 

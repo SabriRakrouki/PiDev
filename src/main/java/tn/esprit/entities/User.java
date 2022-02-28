@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -45,6 +46,13 @@ public  abstract class User implements Serializable{
 	private String password;
 	private String phoneNumber;
 	private String Photo;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	private Set<Post> posts;
+	@OneToMany(cascade=CascadeType.ALL)
+	private Set<Like> liks;
+	
+	
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name ="users_roles", joinColumns = @JoinColumn(name="user_id"),inverseJoinColumns = @JoinColumn(name ="role_id"))
     private Set<Role> roles = new HashSet<>();

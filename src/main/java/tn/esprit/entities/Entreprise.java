@@ -42,4 +42,6 @@ public class Entreprise extends User implements Serializable {
 	private Set<Employee> employees;
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<FeedBack> feedBacks;
+	@OneToMany(cascade=CascadeType.ALL)
+	private Set<Trip> trips;
 }

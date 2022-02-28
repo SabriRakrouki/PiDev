@@ -30,5 +30,6 @@ public class Comment implements Serializable{
 	private Date dateComment;
 	@ManyToOne
 	private Post post;
+	
 
 }

@@ -23,5 +23,5 @@ public class Appreciation implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	
 	private int id;
-	private int Rating;
+	private int rating;
 }
