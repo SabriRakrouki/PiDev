@@ -46,6 +46,8 @@ public  abstract class User implements Serializable{
 	private String password;
 	private String phoneNumber;
 	private String Photo;
+	private Set<String> languages;
+	private Location BornePlace;
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	private Set<Post> posts;

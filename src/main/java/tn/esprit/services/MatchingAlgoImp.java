@@ -1,6 +1,7 @@
 package tn.esprit.services;
 
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,11 +12,17 @@ import tn.esprit.repositories.TripRepository;
 
 public class MatchingAlgoImp {
 	public static int GABAGE = 5;
-
+	public static int AGESCORE=10;
+	public static int LANGUAGESCORE=20;
+	public static int LOCATIONEMPSCORE=30;
 	@Autowired
 	TripRepository tripRepository;
 	@Autowired
 	Set<User> userMatched;
+	@Autowired
+	TreeMap<Integer,Employee> mapuser;
+	@Autowired
+	int score;
 
 	/*
 	 * try to find all trips by location to make a collections of trips and get list
@@ -51,7 +58,8 @@ public class MatchingAlgoImp {
 
 	}
 
-	public Set<User> getAllTheMatchingPeople(Employee user, Trip tripToMatch) {
+	public Set<Employee> getAllTheMatchingPeople(Employee user, Trip tripToMatch) {
+		
 
 		Set<Trip> trips = this.findAllTripsByLocation(findTripByuser(user));
 		for (Trip trip : trips) {
@@ -60,17 +68,33 @@ public class MatchingAlgoImp {
 				Set<Employee> usersToMatch = trip.getEmployee();
 
 				for (Employee emp : usersToMatch) {
+					score=0;
 					if (AgeGap(user.getAge(), emp.getAge())) {
-
+						score=score+AGESCORE;		
+							
 					}
+					
+					
+					
+					
+				mapuser.put(score, user);
 
 				}
+				
+				
 
 			}
+			
+			
+			
 
 		}
-
-		return null;
+		
+		
+		
+		
+		
+		return (Set<Employee>)mapuser.descendingMap().values();
 
 	}
 
