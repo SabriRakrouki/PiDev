@@ -35,23 +35,20 @@ public class Trip implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Id;
-	private String Location;
-	private String city;
-	private String HotelName;
-	
+	@OneToOne
+	private Location tripLocation;
+
 	private Date DepartDate;
-	
+
 	private Date ArrivalDate;
-	
+
 	private String Description;
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<Program> programs;
 	@ManyToOne
 	private Entreprise entreprise;
-	
-	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Employee> employee;
 
-	
-	
 }

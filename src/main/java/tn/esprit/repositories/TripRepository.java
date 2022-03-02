@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import tn.esprit.entities.Location;
 import tn.esprit.entities.Trip;
 import tn.esprit.entities.User;
 @Repository
@@ -15,8 +16,8 @@ public interface TripRepository extends JpaRepository<Trip,Integer> {
 public Trip findTripByuser(@Param("user") User user);
 
 
-@Query("select * from trip where location=:locationTrip and city=:CityTrip")
-public Set<Trip> findTripByLocation(@Param("locationTrip") String Location,@Param("CityTrip") String city);
+@Query("select * from trip location as l  where id=l.trip_id and l.id=:location")
+public Set<Trip> findTripByLocation(@Param("locationTrip") Location Location);
 
 
 
