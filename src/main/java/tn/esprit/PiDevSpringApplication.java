@@ -5,8 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-
+@EnableScheduling
 @SpringBootApplication(exclude ={SecurityAutoConfiguration.class})
 
 public class PiDevSpringApplication {
@@ -14,5 +15,4 @@ public class PiDevSpringApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PiDevSpringApplication.class, args);
 	}
-
 }

@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.entities.Employee;
@@ -67,10 +68,11 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 		}
 
 	}
+	
 
-	public Set<Employee> getAllTheMatchingPeople(Employee user, Trip tripToMatch) {
-
-		Set<Trip> trips = this.findAllTripsByLocation(findTripByuser(user));
+	public Set<Employee> getAllTheMatchingPeople(Employee user) {
+			Trip tripToMatch=findTripByuser(user);
+		Set<Trip> trips = this.findAllTripsByLocation(tripToMatch);
 		for (Trip trip : trips) {
 			if ((trip.getArrivalDate().compareTo(tripToMatch.getArrivalDate()) > 0)
 					&& (trip.getArrivalDate().before(tripToMatch.getArrivalDate()))) {

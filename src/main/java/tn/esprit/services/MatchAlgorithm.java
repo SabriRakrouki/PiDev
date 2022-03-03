@@ -14,7 +14,7 @@ public interface MatchAlgorithm {
 	public boolean languageCheck(Employee employee,Employee employeeToMatch);
 	
 	
-	public Set<Employee> getAllTheMatchingPeople(Employee user, Trip tripToMatch);
+	public Set<Employee> getAllTheMatchingPeople(Employee user);
 	
 	
 	
