@@ -3,10 +3,10 @@ package tn.esprit.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import tn.esprit.entities.Like;
+import tn.esprit.entities.*;
 
 
 @Repository
-public interface LikeRepository extends JpaRepository<Like, Integer>{
+public interface NotificationRepository extends JpaRepository<Notification, Long>{
 
 }
