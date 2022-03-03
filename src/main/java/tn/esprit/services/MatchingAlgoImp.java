@@ -4,12 +4,14 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import tn.esprit.entities.Employee;
 import tn.esprit.entities.Location;
 import tn.esprit.entities.Trip;
 import tn.esprit.entities.User;
 import tn.esprit.repositories.TripRepository;
+@Service
 
 public class MatchingAlgoImp implements MatchAlgorithm {
 	public static int GABAGE = 5;
@@ -18,13 +20,21 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 	public static int LOCATIONEMPSCORE = 30;
 	@Autowired
 	TripRepository tripRepository;
-	@Autowired
+	
 	Set<User> userMatched;
-	@Autowired
+
 	TreeMap<Integer, Employee> mapuser;
-	@Autowired
+	
 	int score;
 
+	public MatchingAlgoImp(TreeMap<Integer, Employee> mapuser,Set<User> userMatched) {
+		// TODO Auto-generated constructor stub
+		this.mapuser=mapuser;
+		
+		this.userMatched=userMatched;
+	}
+	
+	
 	/*
 	 * try to find all trips by location to make a collections of trips and get list
 	 * of users from them first then will match user with postion of the worker and
@@ -114,5 +124,7 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 
 		return false;
 	}
+	
+	//i need to put this to the  test 
 
 }

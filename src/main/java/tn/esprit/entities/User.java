@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -47,6 +48,7 @@ public  abstract class User implements Serializable{
 	private String password;
 	private String phoneNumber;
 	private String Photo;
+	@ElementCollection
 	private Set<String> languages;
 	@OneToOne
 	private Location BornePlace;
