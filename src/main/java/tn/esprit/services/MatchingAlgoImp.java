@@ -7,13 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
 import tn.esprit.entities.Employee;
 import tn.esprit.entities.Location;
 import tn.esprit.entities.Trip;
 import tn.esprit.entities.User;
 import tn.esprit.repositories.TripRepository;
-@Service
 
+@Service
+@Slf4j
 public class MatchingAlgoImp implements MatchAlgorithm {
 	public static int GABAGE = 5;
 	public static int AGESCORE = 10;
@@ -21,21 +23,20 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 	public static int LOCATIONEMPSCORE = 30;
 	@Autowired
 	TripRepository tripRepository;
-	
-	Set<User> userMatched;
+
+	Set<Employee> userMatched;
 
 	TreeMap<Integer, Employee> mapuser;
-	
+
 	int score;
 
-	public MatchingAlgoImp(TreeMap<Integer, Employee> mapuser,Set<User> userMatched) {
+	public MatchingAlgoImp(TreeMap<Integer, Employee> mapuser, Set<Employee> userMatched) {
 		// TODO Auto-generated constructor stub
-		this.mapuser=mapuser;
-		
-		this.userMatched=userMatched;
+		this.mapuser = mapuser;
+
+		this.userMatched = userMatched;
 	}
-	
-	
+
 	/*
 	 * try to find all trips by location to make a collections of trips and get list
 	 * of users from them first then will match user with postion of the worker and
@@ -52,12 +53,6 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 		return tripRepository.findTripByuser(user);
 	}
 
-	public Set<Trip> findAllTripsByLocation(Trip trip) {
-
-		return tripRepository.findTripByLocation(trip.getTripLocation());
-
-	}
-
 	public boolean ageGap(int ageOftheEmp, int age) {
 		if (age - GABAGE < ageOftheEmp) {
 			return true;
@@ -68,32 +63,31 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 		}
 
 	}
-	
 
 	public Set<Employee> getAllTheMatchingPeople(Employee user) {
-			Trip tripToMatch=findTripByuser(user);
-		Set<Trip> trips = this.findAllTripsByLocation(tripToMatch);
+		userMatched = null;
+		Trip tripToMatch = findTripByuser(user);
+
+		Set<Trip> trips = this.findTripByDate(tripToMatch);
 		for (Trip trip : trips) {
-			if ((trip.getArrivalDate().compareTo(tripToMatch.getArrivalDate()) > 0)
-					&& (trip.getArrivalDate().before(tripToMatch.getArrivalDate()))) {
+
+			if (trip.getTripLocation().getCountry().equals(tripToMatch.getTripLocation().getCountry())) {
+
 				Set<Employee> usersToMatch = trip.getEmployee();
 
 				for (Employee emp : usersToMatch) {
+
 					score = 0;
 					if (ageGap(user.getAge(), emp.getAge())) {
 						score = score + AGESCORE;
 
 					}
-					if (locationCheck(emp.getBornePlace(), user.getBornePlace())) {
-						score = score + LOCATIONEMPSCORE;
-					}
+
 					if (languageCheck(emp, user)) {
 						score = score + LANGUAGESCORE;
 					}
-					if (locationCheck(trip.getTripLocation(), tripToMatch.getTripLocation())) {
-						score = score + LOCATIONEMPSCORE;
-					}
 
+					log.info(user.getCin());
 					mapuser.put(score, user);
 
 				}
@@ -101,15 +95,35 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 			}
 
 		}
+		for (Employee em : mapuser.descendingMap().values()) {
+			userMatched.add(em);
 
-		return (Set<Employee>) mapuser.descendingMap().values();
+		}
+		return userMatched;
 
 	}
 
 	@Override
-	public boolean locationCheck(Location firstLocation, Location secLocation) {
+	public Set<Trip> findTripByDate(Trip trip) {
 		// TODO Auto-generated method stub
-		if (firstLocation.equals(secLocation)) {
+		return tripRepository.findTripByDate(trip.getArrivalDate(), trip.getDepartDate(), trip.getId());
+	}
+
+	@Override
+	public boolean checkStates(String StateToCompaire, String State) {
+
+		// TODO Auto-generated method stub
+		if (StateToCompaire.equals(State)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean checkCity(String CityToCompaire, String City) {
+		// TODO Auto-generated method stub
+		if (CityToCompaire.equals(City)) {
 			return true;
 		}
 		return false;
@@ -118,15 +132,26 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 	@Override
 	public boolean languageCheck(Employee employee, Employee employeeToMatch) {
 		// TODO Auto-generated method stub
-		for (String lan : employee.getLanguages()) {
-			if (employeeToMatch.getLanguages().contains(lan)) {
-				return true;
+		for (String lang : employee.getLanguages()) {
+			for (String langToMatch : employeeToMatch.getLanguages()) {
+				if (lang.equals(langToMatch)) {
+					return true;
+				}
 			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean BorneCheck(User userToMatch, User user) {
+		// TODO Auto-generated method stub
+		if (userToMatch.getBornePlace().getCountry().equals(user.getBornePlace().getCountry())) {
+			return true;
 		}
 
 		return false;
 	}
-	
-	//i need to put this to the  test 
+
+	// i need to put this to the test
 
 }

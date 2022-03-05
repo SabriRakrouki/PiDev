@@ -38,4 +38,8 @@ public class Employee extends User implements Serializable {
 	private Invitation invitation;
 	@ManyToOne
 	Entreprise entreprise;
+	
+	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	private Set<Trip> trip;
+	
 }
