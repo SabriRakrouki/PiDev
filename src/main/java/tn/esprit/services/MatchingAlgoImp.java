@@ -8,7 +8,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import tn.esprit.entities.Domain;
 import tn.esprit.entities.Employee;
+import tn.esprit.entities.Entreprise;
 import tn.esprit.entities.Location;
 import tn.esprit.entities.Trip;
 import tn.esprit.entities.User;
@@ -18,9 +20,13 @@ import tn.esprit.repositories.TripRepository;
 @Slf4j
 public class MatchingAlgoImp implements MatchAlgorithm {
 	public static int GABAGE = 5;
-	public static int AGESCORE = 10;
-	public static int LANGUAGESCORE = 20;
-	public static int LOCATIONEMPSCORE = 30;
+	public static int AGESCORE = 25;
+	public static int LANGUAGESCORE = 50;
+
+	public static int BORNSCORE = 70;
+	public static int CITYTRIPSCORE = 100;
+	public static int STATESCORE = 150;
+	public static int POSTIONSCORE = 50;
 	@Autowired
 	TripRepository tripRepository;
 
@@ -64,45 +70,6 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 
 	}
 
-	public Set<Employee> getAllTheMatchingPeople(Employee user) {
-		userMatched = null;
-		Trip tripToMatch = findTripByuser(user);
-
-		Set<Trip> trips = this.findTripByDate(tripToMatch);
-		for (Trip trip : trips) {
-
-			if (trip.getTripLocation().getCountry().equals(tripToMatch.getTripLocation().getCountry())) {
-
-				Set<Employee> usersToMatch = trip.getEmployee();
-
-				for (Employee emp : usersToMatch) {
-
-					score = 0;
-					if (ageGap(user.getAge(), emp.getAge())) {
-						score = score + AGESCORE;
-
-					}
-
-					if (languageCheck(emp, user)) {
-						score = score + LANGUAGESCORE;
-					}
-
-					log.info(user.getCin());
-					mapuser.put(score, user);
-
-				}
-
-			}
-
-		}
-		for (Employee em : mapuser.descendingMap().values()) {
-			userMatched.add(em);
-
-		}
-		return userMatched;
-
-	}
-
 	@Override
 	public Set<Trip> findTripByDate(Trip trip) {
 		// TODO Auto-generated method stub
@@ -143,13 +110,94 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 	}
 
 	@Override
-	public boolean BorneCheck(User userToMatch, User user) {
+	public boolean checkdomainEntreprise(Entreprise entrepriseToMatch, Entreprise entreprise) {
+		// TODO Auto-generated method stub
+		for (Domain dom : entrepriseToMatch.getDomains()) {
+			for (Domain domainTomatch : entreprise.getDomains()) {
+				if (dom.getNameDomain().equals(domainTomatch.getNameDomain())) {
+					return true;
+				}
+			}
+
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean checkPostion(Employee employeeToMatch, Employee employee) {
+		// TODO Auto-generated method stub
+		if (employeeToMatch.getPositions().equals(employee.getPositions())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean bornCheck(User userToMatch, User user) {
 		// TODO Auto-generated method stub
 		if (userToMatch.getBornePlace().getCountry().equals(user.getBornePlace().getCountry())) {
 			return true;
 		}
 
 		return false;
+	}
+
+	public Set<Employee> getAllTheMatchingPeople(Employee user) {
+
+		Trip tripToMatch = findTripByuser(user);
+
+		Set<Trip> trips = this.findTripByDate(tripToMatch);
+		for (Trip trip : trips) {
+
+			if (trip.getTripLocation().getCountry().equals(tripToMatch.getTripLocation().getCountry())) {
+
+				Set<Employee> usersToMatch = trip.getEmployee();
+
+				for (Employee emp : usersToMatch) {
+					if (checkdomainEntreprise(user.getEntreprise(), emp.getEntreprise())) {
+						score = 0;
+						if (checkPostion(emp, user)) {
+							score = score + POSTIONSCORE;
+						}
+						if (ageGap(user.getAge(), emp.getAge())) {
+							score = score + AGESCORE;
+
+						}
+						if (bornCheck(emp, user)) {
+							score = score + BORNSCORE;
+						}
+
+						if (checkStates(trip.getTripLocation().getState(), tripToMatch.getTripLocation().getState())) {
+							score = score + STATESCORE;
+							if (checkCity(trip.getTripLocation().getCity(), tripToMatch.getTripLocation().getCity())) {
+								score = score + CITYTRIPSCORE;
+							}
+						}
+
+						if (languageCheck(emp, user)) {
+							score = score + LANGUAGESCORE;
+						}
+
+						log.info(user.getCin());
+						mapuser.put(score, user);
+					}
+
+				}
+
+			}
+
+		}
+		for (Employee em : mapuser.descendingMap().values()) {
+
+			if (!em.equals(user)) {
+				userMatched.add(em);
+			}
+
+		}
+		return userMatched;
+
 	}
 
 	// i need to put this to the test
