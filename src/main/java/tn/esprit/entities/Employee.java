@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.UniqueConstraint;
 
@@ -32,14 +33,14 @@ public class Employee extends User implements Serializable {
 	private String firstName;
 	private String lastName;
 	private int Age;
-	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	private Set<Position> positions;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Position position;
 	@OneToOne
 	private Invitation invitation;
 	@ManyToOne
 	Entreprise entreprise;
 	
-	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	private Set<Trip> trip;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Trip trip;
 	
 }

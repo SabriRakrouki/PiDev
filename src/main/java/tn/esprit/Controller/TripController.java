@@ -1,9 +1,20 @@
 package tn.esprit.Controller;
 
+import java.io.IOException;
+import java.net.http.HttpClient;
 import java.util.List;
 
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,16 +25,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+import tn.esprit.entities.Employee;
+import tn.esprit.entities.Location;
 import tn.esprit.entities.Trip;
+import tn.esprit.repositories.EmployeeRepository;
 import tn.esprit.services.ITripService;
+import tn.esprit.services.LocationService;
 
 @RestController
 @RequestMapping("/trip")
 public class TripController {
 	@Autowired
 	protected ITripService iTripService;
-
+	@Autowired
+	LocationService locationService;
+	@Autowired
+	EmployeeRepository employeeRepository ;
+	
 	@PostMapping("/addTrip")
 	@ResponseBody
 	public ResponseEntity<String> addTrip(Trip trip) {
@@ -37,8 +57,7 @@ public class TripController {
 	@ResponseBody
 	public Trip updateAdmin(@RequestBody Trip trip) {
 		iTripService.UpdateTrip(trip);
-		
-		
+
 		return trip;
 	}
 
@@ -46,10 +65,6 @@ public class TripController {
 	@ResponseBody
 	public ResponseEntity<List<Trip>> getAllTrip() {
 
-		
-		
-		
-		
 		return ResponseEntity.status(200).body(iTripService.getAllTrip());
 	}
 
@@ -61,5 +76,23 @@ public class TripController {
 		return ResponseEntity.status(200).body("Trip Deleted");
 
 	}
+	@PostMapping("/addUser/{idTrip}")
+	@ResponseBody
+	public Trip addUser(@PathVariable("idTrip") int idtrip ,@RequestBody Employee employee) {
+		
+
+		return iTripService.AddUserToTrip(employee,idtrip );
+	}
+
+	
+	@GetMapping("/country")
+	@ResponseBody
+	public List<Location> getCountry() throws Exception {
+		
+		
+	return locationService.getCountry();
+
+	}
+	
 
 }

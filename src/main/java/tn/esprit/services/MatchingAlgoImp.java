@@ -1,9 +1,11 @@
 package tn.esprit.services;
 
+import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -54,9 +56,9 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 	 * 
 	 * 
 	 */
-	public Trip findTripByuser(Employee user) {
+	public Set<Trip> findTripByuser(Employee user) {
 
-		return tripRepository.findTripByuser(user);
+		return tripRepository.findTripByuser(user.getId());
 	}
 
 	public boolean ageGap(int ageOftheEmp, int age) {
@@ -71,8 +73,7 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 	}
 
 	@Override
-	public Set<Trip> findTripByDate(Trip trip) {
-		// TODO Auto-generated method stub
+	public Set<Trip> findTripByDate(Trip trip)  {
 		return tripRepository.findTripByDate(trip.getArrivalDate(), trip.getDepartDate(), trip.getId());
 	}
 
@@ -127,7 +128,7 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 	@Override
 	public boolean checkPostion(Employee employeeToMatch, Employee employee) {
 		// TODO Auto-generated method stub
-		if (employeeToMatch.getPositions().equals(employee.getPositions())) {
+		if (employeeToMatch.getPosition().getPotionName().equals(employee.getPosition())) {
 			return true;
 		}
 
@@ -144,10 +145,11 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 		return false;
 	}
 
-	public Set<Employee> getAllTheMatchingPeople(Employee user) {
+	public Set<Employee> getAllTheMatchingPeople(Employee user,Trip tripToMatch )  {
 
-		Trip tripToMatch = findTripByuser(user);
+	
 
+	try {
 		Set<Trip> trips = this.findTripByDate(tripToMatch);
 		for (Trip trip : trips) {
 
@@ -189,13 +191,20 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 			}
 
 		}
-		for (Employee em : mapuser.descendingMap().values()) {
+		
+		List<Employee> employeesRes=(List<Employee>) mapuser.descendingMap().values();
+		for (Employee em : employeesRes ) {
 
 			if (!em.equals(user)) {
 				userMatched.add(em);
 			}
 
 		}
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+		log.info(e.getMessage());
+	}
 		return userMatched;
 
 	}

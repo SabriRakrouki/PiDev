@@ -38,9 +38,9 @@ public class Trip implements Serializable {
 	@OneToOne
 	private Location tripLocation;
 
-	private Date DepartDate;
+	private Date departDate;
 
-	private Date ArrivalDate;
+	private Date arrivalDate;
 
 	private String Description;
 	@OneToMany(cascade = CascadeType.ALL)
@@ -48,7 +48,7 @@ public class Trip implements Serializable {
 	@ManyToOne
 	private Entreprise entreprise;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL )
 	private Set<Employee> employee;
 
 }

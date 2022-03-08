@@ -3,6 +3,7 @@ package tn.esprit.services;
 import java.util.List;
 import java.util.Set;
 
+import tn.esprit.entities.Employee;
 import tn.esprit.entities.Trip;
 import tn.esprit.entities.User;
 
@@ -17,6 +18,6 @@ public interface ITripService {
 
 	public Trip FindTripById(int id);
 	
-	
+	public Trip AddUserToTrip(Employee employee, int idtrip);
 	
 }

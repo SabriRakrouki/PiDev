@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +27,12 @@ public class Location {
 	private String state;
 
 	private String city;
+	@JsonIgnore
+	private String CountryTag;
+	@JsonIgnore
+	private String StateTage;
+	
+	
 	@OneToOne 
 	private User user;
 	@OneToOne
