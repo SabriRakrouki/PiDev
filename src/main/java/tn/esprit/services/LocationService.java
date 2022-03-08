@@ -16,9 +16,10 @@ import tn.esprit.entities.Trip;
 
 public interface LocationService {
 	public List<Location> getCountry() throws  Exception ;
-	public List<String> getCityByCountry();
-	public List<String> getStatesbyCountry();
-	public List<String> GetcitiesbyStateAndCountry();
+	public Location GetCountybyTag(String tag) throws Exception;
+	public List<Location> getCityByCountry(String tag) throws Exception;
+	public List<Location> getStatesbyCountry(String Ctag ) throws Exception;
+	public List<Location> GetcitiesbyStateAndCountry(String Ctag,String Stag ) throws Exception;
 	public Location addLocationToTrip(Location location,Trip trip);
 	public Location addLocationToEmployee(Location location,Employee employee);
 	public Location addLocation(Location location);

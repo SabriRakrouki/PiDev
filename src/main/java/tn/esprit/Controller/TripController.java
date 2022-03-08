@@ -85,7 +85,7 @@ public class TripController {
 	}
 
 	
-	@GetMapping("/country")
+	@GetMapping("/countries")
 	@ResponseBody
 	public List<Location> getCountry() throws Exception {
 		
@@ -93,6 +93,25 @@ public class TripController {
 	return locationService.getCountry();
 
 	}
-	
+	@GetMapping("/country/{tag}")
+	@ResponseBody
+	public Location getCountrybyTag(@PathVariable("tag") String tag) throws Exception{
+		return locationService.GetCountybyTag(tag);
+	}
+	@GetMapping("/country/{tag}/cities")
+	@ResponseBody
+	public List<Location> getCitybyCountry(@PathVariable("tag") String tag) throws Exception{
+		return locationService.getCityByCountry(tag);
+	}
+	@GetMapping("/country/{tag}/states")
+	@ResponseBody
+	public List<Location> getStatebyCountry(@PathVariable("tag") String tag) throws Exception{
+		return locationService.getStatesbyCountry(tag);
+	}
+	@GetMapping("/country/{Ctag}/states/{Stag}")
+	@ResponseBody
+	public List<Location> getStatebyCountry(@PathVariable("Ctag") String Ctag,@PathVariable("Stag") String Stag) throws Exception{
+		return locationService.GetcitiesbyStateAndCountry(Ctag, Stag);
+	}
 
 }

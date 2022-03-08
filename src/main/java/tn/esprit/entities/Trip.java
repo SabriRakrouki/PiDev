@@ -35,7 +35,7 @@ public class Trip implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Id;
-	@OneToOne
+	@ManyToOne
 	private Location tripLocation;
 
 	private Date departDate;

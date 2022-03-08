@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
@@ -50,7 +51,7 @@ public  abstract class User implements Serializable{
 	private String Photo;
 	@ElementCollection
 	private Set<String> languages;
-	@OneToOne
+	@ManyToOne
 	private Location BornePlace;
 	
 	@OneToMany(cascade=CascadeType.ALL)

@@ -73,7 +73,7 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 	}
 
 	@Override
-	public Set<Trip> findTripByDate(Trip trip)  {
+	public Set<Trip> findTripByDate(Trip trip) {
 		return tripRepository.findTripByDate(trip.getArrivalDate(), trip.getDepartDate(), trip.getId());
 	}
 
@@ -145,66 +145,66 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 		return false;
 	}
 
-	public Set<Employee> getAllTheMatchingPeople(Employee user,Trip tripToMatch )  {
+	public Set<Employee> getAllTheMatchingPeople(Employee user, Trip tripToMatch) {
 
-	
+		try {
+			Set<Trip> trips = this.findTripByDate(tripToMatch);
+			for (Trip trip : trips) {
 
-	try {
-		Set<Trip> trips = this.findTripByDate(tripToMatch);
-		for (Trip trip : trips) {
+				if (trip.getTripLocation().getCountry().equals(tripToMatch.getTripLocation().getCountry())) {
 
-			if (trip.getTripLocation().getCountry().equals(tripToMatch.getTripLocation().getCountry())) {
+					Set<Employee> usersToMatch = trip.getEmployee();
 
-				Set<Employee> usersToMatch = trip.getEmployee();
-
-				for (Employee emp : usersToMatch) {
-					if (checkdomainEntreprise(user.getEntreprise(), emp.getEntreprise())) {
-						score = 0;
-						if (checkPostion(emp, user)) {
-							score = score + POSTIONSCORE;
-						}
-						if (ageGap(user.getAge(), emp.getAge())) {
-							score = score + AGESCORE;
-
-						}
-						if (bornCheck(emp, user)) {
-							score = score + BORNSCORE;
-						}
-
-						if (checkStates(trip.getTripLocation().getState(), tripToMatch.getTripLocation().getState())) {
-							score = score + STATESCORE;
-							if (checkCity(trip.getTripLocation().getCity(), tripToMatch.getTripLocation().getCity())) {
-								score = score + CITYTRIPSCORE;
+					for (Employee emp : usersToMatch) {
+						if (checkdomainEntreprise(user.getEntreprise(), emp.getEntreprise())) {
+							score = 0;
+							if (checkPostion(emp, user)) {
+								score = score + POSTIONSCORE;
 							}
+							if (ageGap(user.getAge(), emp.getAge())) {
+								score = score + AGESCORE;
+
+							}
+							if (bornCheck(emp, user)) {
+								score = score + BORNSCORE;
+							}
+
+							if (checkStates(trip.getTripLocation().getState(),
+									tripToMatch.getTripLocation().getState())) {
+								score = score + STATESCORE;
+								if (checkCity(trip.getTripLocation().getCity(),
+										tripToMatch.getTripLocation().getCity())) {
+									score = score + CITYTRIPSCORE;
+								}
+							}
+
+							if (languageCheck(emp, user)) {
+								score = score + LANGUAGESCORE;
+							}
+
+							log.info(user.getCin());
+							mapuser.put(score, user);
 						}
 
-						if (languageCheck(emp, user)) {
-							score = score + LANGUAGESCORE;
-						}
-
-						log.info(user.getCin());
-						mapuser.put(score, user);
 					}
 
 				}
 
 			}
 
-		}
-		
-		List<Employee> employeesRes=(List<Employee>) mapuser.descendingMap().values();
-		for (Employee em : employeesRes ) {
+			List<Employee> employeesRes = (List<Employee>) mapuser.descendingMap().values();
+			for (Employee em : employeesRes) {
 
-			if (!em.equals(user)) {
-				userMatched.add(em);
+				if (!em.equals(user)) {
+					userMatched.add(em);
+				}
+
 			}
 
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.info(e.getMessage());
 		}
-		
-	} catch (Exception e) {
-		// TODO: handle exception
-		log.info(e.getMessage());
-	}
 		return userMatched;
 
 	}
