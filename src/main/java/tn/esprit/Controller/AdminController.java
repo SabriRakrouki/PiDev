@@ -1,8 +1,14 @@
 package tn.esprit.Controller;
 
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,20 +18,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import tn.esprit.entities.Admin;
+import tn.esprit.entities.ERole;
+import tn.esprit.entities.Role;
+import tn.esprit.entities.StaticOfUser;
+import tn.esprit.entities.User;
+import tn.esprit.payload.MessageResponse;
+import tn.esprit.repositories.RoleRepository;
+import tn.esprit.repositories.UserRepository;
 import tn.esprit.services.IAdminService;
+import tn.esprit.services.IuserService;
 @RestController
 public class AdminController {
 	@Autowired
     private IAdminService adminService;
+	  @Autowired
+	  UserRepository userRepository;
+	  @Autowired
+	  RoleRepository roleRepository;
+	  @Autowired
+	  PasswordEncoder encoder;
+	  @Autowired
+	  IuserService staticService;
 	//http://localhost:8090/travelup/back/add-admin
-	@PostMapping("/add-admin")
-	@ResponseBody
-	public void addAdmin(@RequestBody Admin admin) {
-		adminService.addAdmin(admin);
-	}
+	 @PostMapping("/add-admin")
+	  public ResponseEntity<?> registerUser(@Valid @RequestBody Admin admin) {
+	    if (userRepository.existsByUsername(admin.getUsername())) {
+	      return ResponseEntity
+	          .badRequest()
+	          .body(new MessageResponse("Error: Username is already taken!"));
+	    }
+
+	    if (userRepository.existsByEmail(admin.getEmail())) {
+	      return ResponseEntity
+	          .badRequest()
+	          .body(new MessageResponse("Error: Email is already in use!"));
+	    }
+	    adminService.addAdmin(admin);
+	    return ResponseEntity.ok(new MessageResponse("Admin registered successfully!"));
+	  }
 	//http://localhost:8090/travelup/back/retrieveAdmins	 
-	@GetMapping("/retrieveAdmins")
+	@GetMapping("/admin/retrieveAdmins")
 	@ResponseBody
 	public List<Admin>retrieveAllAdmin() {
 	return adminService.retrieveAllAdmin();
@@ -41,5 +76,9 @@ public class AdminController {
 		@ResponseBody
 		public Admin updateAdmin(@RequestBody Admin admin) {
 			return adminService.updateAdmin(admin);
+		}
+		@PostMapping("/static")
+		public StaticOfUser staticOfUser() throws ParseException{
+			return staticService.addUserStatic();
 		}
 }
