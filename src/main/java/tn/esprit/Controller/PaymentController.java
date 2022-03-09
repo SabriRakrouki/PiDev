@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,7 +39,8 @@ public class PaymentController {
 	private StripeService paymentsService;
 
 	@PostMapping("/charge")
-	public String charge(ChargeRequest chargeRequest) throws StripeException {
+	@ResponseBody
+	public String charge( @RequestBody ChargeRequest chargeRequest) throws StripeException {
 
 		return paymentsService.charge(chargeRequest).toString();
 

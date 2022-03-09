@@ -51,7 +51,7 @@ public class StripeService {
 
 		Map<String, Object> chargeParams = new HashMap<>();
 		chargeParams.put("amount", chargeRequest.getAmount() * 100L);
-		chargeParams.put("currency", chargeRequest.getCurrency());
+		chargeParams.put("currency", "USD");
 		chargeParams.put("description", chargeRequest.getDescription());
 
 		chargeParams.put("source", token.getId());

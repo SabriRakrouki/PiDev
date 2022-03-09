@@ -21,7 +21,7 @@ public Set<Trip> findTripByuser(@Param("user") int user);
 public Set<Trip> findTripByDate(@Param("dateDebut") Date dateDebut,@Param("dateFin") Date dateFin ,@Param("id") int id) ;
 
 
-@Query(value = "select t from trip as t, location as l where t.trip_location_id=l.id and l.id=:locationTrip",nativeQuery = true)
+@Query( "select t from Trip as t, Location as l where t.tripLocation.id=l.id and l.id=:locationTrip")
 public Set<Trip> findTripByLocation(@Param("locationTrip") Location Location);
 
 
