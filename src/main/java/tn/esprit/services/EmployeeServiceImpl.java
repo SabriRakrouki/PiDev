@@ -1,23 +1,49 @@
 package tn.esprit.services;
 
+import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import tn.esprit.entities.ERole;
 import tn.esprit.entities.Employee;
+import tn.esprit.entities.Entreprise;
+import tn.esprit.entities.Invitation;
+import tn.esprit.entities.Role;
+import tn.esprit.entities.State;
 import tn.esprit.repositories.EmployeeRepository;
+import tn.esprit.repositories.EntrepriseRepository;
+import tn.esprit.repositories.InvitationRepository;
+import tn.esprit.repositories.RoleRepository;
 
 @Service
 public class EmployeeServiceImpl implements IEmployeeService{
 	@Autowired
 	EmployeeRepository employeeRepository ;
+	@Autowired
+	EntrepriseRepository entrepriseRepository ;
+	@Autowired
+	InvitationRepository invitationRepository ;
+	@Autowired
+	RoleRepository roleRepository ;
 	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	@Override
 	public void addEmployee(Employee employee) {
+		Role userRole = roleRepository.getByName(ERole.ROLE_EMPLOYEE);
+		Set<Role> roles = new HashSet<>();
+		roles.add(userRole);
+		employee.setRoles(roles);
 		employee.setPassword(passwordEncoder.encode(employee.getPassword()));
+		Invitation invitation = invitationRepository.findByEmail(employee.getEmail());
+		invitation.setState(State.Accepted);
+		Entreprise entreprise = invitation.getEntreprise();
+		employee.setEntreprise(entreprise);
+		employee.setDateCreation(Calendar.getInstance().getTime());
 		employeeRepository.save(employee);
 	}
 
@@ -34,6 +60,7 @@ public class EmployeeServiceImpl implements IEmployeeService{
 
 	@Override
 	public Employee updateEmployee(Employee employee) {
+		employee.setPassword(passwordEncoder.encode(employee.getPassword()));
 		return employeeRepository.save(employee); 
 	}
 

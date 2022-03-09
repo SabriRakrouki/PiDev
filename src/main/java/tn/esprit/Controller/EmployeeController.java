@@ -20,16 +20,17 @@ public class EmployeeController {
 	@Autowired
     private IEmployeeService employeeService;
 	//http://localhost:8090/travelup/back/add-employee
-	@PostMapping("/add-employee")
+	@PostMapping("/signup/employee")
 	@ResponseBody
 	public void addEmployee(@RequestBody Employee employee) {
 		employeeService.addEmployee(employee);
 	}
 	//http://localhost:8090/travelup/back/retrieveEmployees	 
-	@GetMapping("/retrieveEmployees")
+	@GetMapping("/employee/retrieveEmployees")
 	@ResponseBody
 	public List<Employee>retrieveAllEmployee() {
-	return employeeService.retrieveAllEmployee();
+		List <Employee> employees = employeeService.retrieveAllEmployee();
+	return employees;
 	}
 	//http://localhost:8090/travelup/back/remove-employee/3
 		@DeleteMapping("/remove-employee/{employee-id}")

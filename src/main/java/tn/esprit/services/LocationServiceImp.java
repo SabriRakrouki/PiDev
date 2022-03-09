@@ -1,26 +1,22 @@
 package tn.esprit.services;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-
-
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONArray;
 import tn.esprit.entities.Employee;
 import tn.esprit.entities.Location;
 import tn.esprit.entities.Trip;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import org.json.JSONObject;
+
+
 
 @Service
 @Slf4j
@@ -45,6 +41,8 @@ public class LocationServiceImp implements LocationService {
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		// optional default is GET
 		con.setRequestMethod("GET");
+		con.addRequestProperty("User-Agent", 
+				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 		// add request header
 		con.setRequestProperty("X-CSCAPI-KEY", secretKey);
 		int responseCode = con.getResponseCode();
@@ -93,6 +91,8 @@ public class LocationServiceImp implements LocationService {
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		// optional default is GET
 		con.setRequestMethod("GET");
+		con.addRequestProperty("User-Agent", 
+				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 		// add request header
 		con.setRequestProperty("X-CSCAPI-KEY", secretKey);
 		int responseCode = con.getResponseCode();
@@ -138,6 +138,8 @@ public class LocationServiceImp implements LocationService {
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		// optional default is GET
 		con.setRequestMethod("GET");
+		con.addRequestProperty("User-Agent", 
+				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 		// add request header
 		con.setRequestProperty("X-CSCAPI-KEY", secretKey);
 		int responseCode = con.getResponseCode();
@@ -175,6 +177,8 @@ public class LocationServiceImp implements LocationService {
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		// optional default is GET
 		con.setRequestMethod("GET");
+		con.addRequestProperty("User-Agent", 
+				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 		// add request header
 		con.setRequestProperty("X-CSCAPI-KEY", secretKey);
 		int responseCode = con.getResponseCode();
@@ -224,6 +228,8 @@ public class LocationServiceImp implements LocationService {
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		// optional default is GET
 		con.setRequestMethod("GET");
+		con.addRequestProperty("User-Agent", 
+				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 		// add request header
 		con.setRequestProperty("X-CSCAPI-KEY", secretKey);
 		int responseCode = con.getResponseCode();

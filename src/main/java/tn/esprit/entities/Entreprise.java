@@ -34,7 +34,7 @@ public class Entreprise extends User implements Serializable {
 	@Column(unique = true)	
 	private String resgistrationNumber;
 	private String name;
-	private int Capacity;
+	private Long Capacity;
 	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	private Set<Domain> domains;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprise")
@@ -42,6 +42,11 @@ public class Entreprise extends User implements Serializable {
 	private Set<Employee> employees;
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<FeedBack> feedBacks;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprise")
+	private Set<Invitation> invitations;
+
 	@OneToMany(cascade=CascadeType.ALL)
 	private Set<Trip> trips;
+
 }

@@ -33,10 +33,12 @@ public class Employee extends User implements Serializable {
 	private String firstName;
 	private String lastName;
 	private int Age;
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Position position;
 	@OneToOne
 	private Invitation invitation;
+
 	@ManyToOne
 	Entreprise entreprise;
 	

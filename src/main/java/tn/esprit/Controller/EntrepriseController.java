@@ -20,13 +20,13 @@ public class EntrepriseController {
 	@Autowired
     private IEntrepriseService entrepriseService;
 	//http://localhost:8090/travelup/back/add-entreprise
-	@PostMapping("/add-entreprise")
+	@PostMapping("/signup/entreprise")
 	@ResponseBody
 	public void addEntreprise(@RequestBody Entreprise entreprise) {
 		entrepriseService.addEntreprise(entreprise);
 	}
 	//http://localhost:8090/travelup/back/retrieveEntreprises	 
-	@GetMapping("/retrieveEntreprises")
+	@GetMapping("/entreprise/retrieveEntreprises")
 	@ResponseBody
 	public List<Entreprise>retrieveAllEntreprise() {
 	return entrepriseService.retrieveAllEntreprise();
