@@ -9,7 +9,7 @@ import tn.esprit.entities.*;
 @Repository
 public interface LikesRepository extends JpaRepository<Like, Long>{
 
-	@Query(value ="SELECT posts_id_post FROM like GROUP BY posts_id_post ORDER BY COUNT(like.id) DESC LIMIT 1", nativeQuery = true)
-	public int getPostsWithMostLikes();
+/*	@Query(value ="SELECT posts_id_post FROM like GROUP BY posts_id_post ORDER BY COUNT(like.id) DESC LIMIT 1", nativeQuery = true)
+	public int getPostsWithMostLikes();*/
 
 }

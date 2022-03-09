@@ -56,8 +56,8 @@ public class Post implements Serializable {
 	@OneToMany(mappedBy="posts",cascade = CascadeType.ALL)
 	private Set<Comment> comments;
 	
-	@OneToMany(mappedBy="posts",cascade = CascadeType.ALL)
-	private Set<Like> likes;
+	@OneToMany(mappedBy="post",cascade = CascadeType.ALL)
+	private Set<Like> like;
 
 	
 	 @OneToOne

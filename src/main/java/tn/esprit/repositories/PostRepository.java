@@ -11,7 +11,7 @@ import tn.esprit.entities.Post;
 public interface PostRepository extends JpaRepository<Post,Integer> {
 	
 	
-	long count();
+	
 	
 
 	

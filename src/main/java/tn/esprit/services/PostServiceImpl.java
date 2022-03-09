@@ -143,8 +143,8 @@ public class PostServiceImpl implements IPostService {
 
     @Override
 	public Post retrieveBestPosts() {
-		 int idpost = LikeRepository.getPostsWithMostLikes();
-		return PostRepository.findById(idpost).get();
+		// int idpost = LikeRepository.getPostsWithMostLikes();
+		return null;
 		
 	}
     
@@ -155,7 +155,7 @@ public class PostServiceImpl implements IPostService {
         Post p = PostRepository.findById(idPost).get();
         User u = userRepo.findById(idUser).get();
         Like l = new Like();
-        l.setPosts(p);
+        l.setPost(p);
         return "okkkk!!";
     }
 

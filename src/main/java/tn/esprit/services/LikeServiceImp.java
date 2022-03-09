@@ -31,7 +31,7 @@ public class LikeServiceImp implements LikesService {
     @Override
     public Like AddLike(Post post,User user) {
     	Like like = new Like();
-    	like.setPosts(post);
+    	like.setPost(post);
     	like.setUser(user);
     	like.setIsliked(true);
     	likesRepository.save(like);
@@ -65,9 +65,9 @@ public class LikeServiceImp implements LikesService {
     	
 		
 		
-		Set<Like>likes= post.getLikes();
+		Set<Like>likes= post.getLike();
 		for (Like lk:likes) {
-			if(user.getId()==lk.getUser().getId()&&post.getId()==lk.getPosts().getId())
+			if(user.getId()==lk.getUser().getId()&&post.getId()==lk.getPost().getId())
 			{
 			 removeLike(lk.getIdLikes());
 			}else {
@@ -81,8 +81,8 @@ public class LikeServiceImp implements LikesService {
 	}
 	@Override
 	public Post retrievePostWithMostlikes() {
-		 int idpost= likesRepository.getPostsWithMostLikes();
-		return postRepository.findById(idpost).get();
+		// int idpost= likesRepository.getPostsWithMostLikes();
+		return null;
 		
 	}
 

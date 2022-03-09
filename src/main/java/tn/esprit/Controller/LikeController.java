@@ -64,7 +64,7 @@ public class LikeController {
 		User us= userrepository.findByUsername(username).get();
 		Post post = postRepo.findById(idpost).get();
 		like.setUser(us);
-		like.setPosts(post);
+		like.setPost(post);
 		return likeService.AddLike(like);
 
 	}
