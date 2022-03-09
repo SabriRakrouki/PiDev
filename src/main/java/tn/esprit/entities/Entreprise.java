@@ -48,5 +48,5 @@ public class Entreprise extends User implements Serializable {
 
 	@OneToMany(cascade=CascadeType.ALL)
 	private Set<Trip> trips;
->>>>>>> 321358325a039b4e7dc7683557b29e9e82b8189f
+
 }

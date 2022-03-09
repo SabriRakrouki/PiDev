@@ -1,13 +1,15 @@
 package tn.esprit.Controller;
 
 import java.io.IOException;
-import java.net.http.HttpClient;
+import java.util.List;
+
+/*import java.net.http.HttpClient;
 import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;*/
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -18,14 +18,14 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
-<<<<<<< HEAD
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-=======
+
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
->>>>>>> 321358325a039b4e7dc7683557b29e9e82b8189f
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.persistence.JoinColumn;
