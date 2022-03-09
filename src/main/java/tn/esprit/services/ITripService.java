@@ -9,7 +9,7 @@ public interface ITripService {
 
 	public Trip AddTrip(Trip trip);
 
-	public Trip UpdateTrip(int idTrip,Trip trip);
+	public Trip UpdateTrip(Trip trip);
 
 	public void DeleteTrip(int id);
 
