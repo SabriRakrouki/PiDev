@@ -34,8 +34,6 @@ public class Employee extends User implements Serializable {
 	private int Age;
 	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	private Set<Position> positions;
-	@OneToOne
-	private Invitation invitation;
 	@ManyToOne
 	Entreprise entreprise;
 }
