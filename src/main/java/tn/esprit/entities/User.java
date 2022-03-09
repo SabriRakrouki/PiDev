@@ -54,7 +54,6 @@ public abstract class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@NotNull
 	private String username;
 	@NotNull
 	private String email;
