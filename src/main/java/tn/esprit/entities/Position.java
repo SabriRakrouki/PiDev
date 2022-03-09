@@ -27,8 +27,15 @@ import lombok.ToString;
 public class Position implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+<<<<<<< HEAD
 	private int id;
 	private String potionName;
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<Employee> employees;
+=======
+private int id;
+private String potionName;
+//@ManyToMany(mappedBy ="positions",cascade = CascadeType.ALL)
+//private Set<Employee> employees;
+>>>>>>> 305fbbf06391cdc30c63afd05ba1c8f90ec486a6
 }

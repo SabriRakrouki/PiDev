@@ -33,9 +33,11 @@ public class Invitation implements Serializable {
 	private Date date;
 	@Enumerated(EnumType.STRING)
 	private State state;
+
 	@NotNull
 	private String email;
 	@ManyToOne
 	@JsonIgnore
 	Entreprise entreprise;
+
 }

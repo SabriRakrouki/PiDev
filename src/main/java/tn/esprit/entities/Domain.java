@@ -28,6 +28,6 @@ public class Domain  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 private int id;
 private String nameDomain; 
-@ManyToMany(mappedBy ="domains",cascade = CascadeType.ALL)
-private Set<Entreprise> entreprises;
+//@ManyToMany(mappedBy ="domains",cascade = CascadeType.ALL)
+//private Set<Entreprise> entreprises;
 }

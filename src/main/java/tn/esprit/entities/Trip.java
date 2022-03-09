@@ -35,6 +35,7 @@ public class Trip implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Id;
+
 	@ManyToOne
 	private Location tripLocation;
 
@@ -50,5 +51,14 @@ public class Trip implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL )
 	private Set<Employee> employee;
+
+	
+	private Float attribution;
+	private Float totalattribution;
+	private Float compteur;
+	private Float note;
+	private String rating;
+	
+	
 
 }

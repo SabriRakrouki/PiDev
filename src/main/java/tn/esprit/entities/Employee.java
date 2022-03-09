@@ -10,7 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
 import javax.persistence.OneToMany;
+
 import javax.persistence.OneToOne;
 import javax.persistence.UniqueConstraint;
 
@@ -30,9 +32,10 @@ import lombok.ToString;
 public class Employee extends User implements Serializable {
 	@Column(unique = true)
 	private String cin;
-	private String firstName;
+	private String FirstName;
 	private String lastName;
 	private int Age;
+
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Position position;
@@ -40,7 +43,10 @@ public class Employee extends User implements Serializable {
 	private Invitation invitation;
 
 	@ManyToOne
+	@ToString.Exclude
 	Entreprise entreprise;
+
+	
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Trip trip;

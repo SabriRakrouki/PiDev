@@ -1,5 +1,7 @@
 package tn.esprit.entities;
 
+import java.io.Serializable;
+import java.util.Set;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+
 import javax.persistence.JoinTable;
 import javax.persistence.*;
 import javax.persistence.ManyToMany;
@@ -27,7 +30,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
@@ -35,8 +37,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-
 
 @Entity
 @Inheritance(strategy =InheritanceType.JOINED)
@@ -52,6 +52,21 @@ import lombok.ToString;
 
 public abstract class User implements Serializable {
 	public static final String PROPERTY_NAME_ID = "id";
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class User implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

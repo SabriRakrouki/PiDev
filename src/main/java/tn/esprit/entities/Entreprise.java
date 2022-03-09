@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -31,22 +32,26 @@ import lombok.ToString;
 @ToString
 @DiscriminatorValue("Entreprise")
 public class Entreprise extends User implements Serializable {
-	@Column(unique = true)	
+
+	@Column(unique = true)
 	private String resgistrationNumber;
 	private String name;
 	private Long Capacity;
-	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Domain> domains;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprise")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "entreprise")
 	@JsonIgnore
 	private Set<Employee> employees;
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<FeedBack> feedBacks;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprise")
+	@OneToMany(mappedBy = "entreprise")
+	private Set<Complaint> complaints;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "entreprise")
 	private Set<Invitation> invitations;
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	private Set<Trip> trips;
 
 }

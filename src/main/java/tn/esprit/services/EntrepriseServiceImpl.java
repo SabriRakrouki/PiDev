@@ -1,5 +1,7 @@
 package tn.esprit.services;
 
+
+
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
@@ -15,12 +17,18 @@ import tn.esprit.entities.Entreprise;
 import tn.esprit.entities.Role;
 import tn.esprit.repositories.EntrepriseRepository;
 import tn.esprit.repositories.RoleRepository;
+
 @Service
 public class EntrepriseServiceImpl  implements IEntrepriseService{
 	@Autowired
 	EntrepriseRepository entrepriseRepository ;
 	@Autowired
 	RoleRepository roleRepository ;
+	@Autowired
+	EmployeRepository employeeRepository;
+	@Autowired
+	ComplaintRepository complaintRepository;
+
 	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	@Override
 	public void addEntreprise(Entreprise entreprise) {
@@ -49,5 +57,19 @@ public class EntrepriseServiceImpl  implements IEntrepriseService{
 		entreprise.setPassword(passwordEncoder.encode(entreprise.getPassword()));
 		return entrepriseRepository.save(entreprise);
 	}
+	@Override
+	public Entreprise FindEntrepriseById(int registre) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+	@Override
+	public Entreprise FindEntrepriseByemployeeId(int emplid) {
+		return entrepriseRepository.findByEmployeesId(emplid);	
+		
+	}
+
 
 }

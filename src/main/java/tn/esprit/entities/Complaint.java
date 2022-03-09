@@ -18,13 +18,19 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Complaint implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -33,8 +39,15 @@ public class Complaint implements Serializable {
 	private State state;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateComplaint;
-
+	private int employeId;
+	
 	@ManyToOne
-	private User user;
+	@ToString.Exclude
+	private Entreprise entreprise;
+	//@ManyToOne
+	//private ArchiveComplaints archivecomplaints;
+
+	//@ManyToOne
+	//private User user;
 
 }
