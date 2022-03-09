@@ -29,6 +29,8 @@ import tn.esprit.repositories.UserRepository;
 
 
 
+
+
 @Service
 public class CommentServiceImpl implements ICommentService {
 	
@@ -46,7 +48,7 @@ public class CommentServiceImpl implements ICommentService {
 	}
 	@Override
     public List<Comment> getAllComments() {
-		//System.out.println(CommentRepository.findAll());
+		
 		return CommentRepository.findAll();
     }
     @Override
@@ -61,11 +63,12 @@ public class CommentServiceImpl implements ICommentService {
 
     @Override
     public Comment AddComment(Comment comment) {
-    	//Post post =comment.getPost();
+    	
     	comment.setContent(comment.getContent());
     	comment.setDateComment(Calendar.getInstance().getTime());
-    	//post.setComments((Set<Comment>)comment);
-        //postRepository.save(post);
+    	comment.setPosts(comment.getPosts());
+    	comment.setUser(comment.getUser());
+    	
     	return CommentRepository.save(comment);
 	
 	}
@@ -82,9 +85,10 @@ public class CommentServiceImpl implements ICommentService {
             String line = reader.readLine();
             while (line != null && verif== false) {
                 if (comment.getContent().contains(line))
-                {
+                {   
+                	verif = true ;
                     System.out.println("You are using bad words");
-                    verif = true ;
+                    
                 }
                 else{
                 	comment.setContent(comment.getContent());
@@ -127,7 +131,34 @@ public class CommentServiceImpl implements ICommentService {
     public long count() {
         return this.CommentRepository.count();
     }
-	
+   
+    @Override
+	public void addCommentBypost(Comment e,int idpost) {
+		
+		Post p = postRepository.findById(idpost).orElse(null);
+		e.setPosts(p);
+		CommentRepository.save(e);
+		
+	}
+    @SuppressWarnings("rawtypes")
+	@Override
+	public List retrieveCooment(int id) {
+		
+    
+    	   return (List) CommentRepository.findById(id).orElseThrow(
+                    () -> new ResponseStatusException(
+                            HttpStatus.NOT_FOUND, "entity not found"
+                    
+                    	      )
+    	            );
+	}
+
+
+    public Comment AjouterEtAffecterCommentToPost(Comment c,int id_post) {
+        Post p = (Post) this.postRepository .findById(id_post).get();
+        c.setPosts(p);
+        return (Comment) this.CommentRepository.save(c);
+    }
 	
 }
 

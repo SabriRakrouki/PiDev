@@ -26,11 +26,17 @@ public interface IPostService {
 
 	PostResponse  getAllPostsbyPagination(int pageNo, int pageSize, String sortBy, String sortDir);
 
-	List<Topic> findByTopic(int id_topic);
-
 	List<Comment> getAllComments();
 
 	long count();
+
+	Post retrieveBestPosts();
+
+	
+
+	String addlike(int idPost, int idUser);
+
+	void AjouterEtAffecterPostToTopic(Post p, int id);
 
 
 

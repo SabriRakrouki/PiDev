@@ -7,12 +7,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
+import tn.esprit.config.MyConstants;
 import tn.esprit.dto.*;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Post;
 import tn.esprit.entities.Topic;
+import tn.esprit.entities.User;
 import tn.esprit.repositories.PostRepository;
+import tn.esprit.repositories.UserRepository;
 import tn.esprit.services.IPostService;
+import tn.esprit.services.LikesService;
 
 
 import java.io.IOException;
@@ -22,6 +26,8 @@ import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,12 +43,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class PostController {
 
 	
+
+    @Autowired
+    public JavaMailSender emailSender;
 	@Autowired	
 	IPostService IPostService;
 	
 	@Autowired
 	PostRepository postRepo;
 	
+	@Autowired 
+	UserRepository userRepository;
+	
+	@Autowired
+	LikesService likesService;
 	
 	@GetMapping("/getPosts")
 	@ResponseBody
@@ -72,12 +86,15 @@ public class PostController {
 
 	}
 	
-	@GetMapping("/getpost/{post-id}")
+	@GetMapping("/getpost/{id}")
 	@ResponseBody
-	public Post getPostById(@PathVariable("post-id") int postId){
+	public Post getPostById(@PathVariable("id") int postId){
 		return IPostService.getPostById(postId);
 				
 	}
+	
+	
+	
 	@GetMapping("/getPostsbypages")
 	@ResponseBody
 	    public PostResponse getAllPostsByPageSize(@RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
@@ -107,21 +124,44 @@ public class PostController {
     }*/
 	
     
-    @PostMapping("/save")
-    public RedirectView saveUser(Post post,
-            @PathParam("photo") MultipartFile multipartFile) throws IOException {
-         
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        post.setPhoto(fileName);
-         
-        Post p=postRepo.save(post);
- 
-        String uploadDir = "C:\\uploads" ;
- 
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-         
-        return new RedirectView("/post", true);
+    
+    @PostMapping("likePost/{idPost}/{iduser}")
+    
+    public ResponseEntity<String> likePost(@PathVariable("idPost") int idPost,@PathVariable("iduser") int iduser) {
+    
+    	likesService.LikePost(iduser, idPost);
+    	
+    	return ResponseEntity.ok("like");
+   	
     }
+    
+    @PutMapping("/addpostAndaffecte/{id}")
+    @ResponseBody
+    public String addPostAndaffecte(@RequestBody Post p, @PathVariable("id") int id) {
+        this.IPostService.AjouterEtAffecterPostToTopic(p, id);
+        return "Post Added and Affected !!!!!";
+    }
+
+    @ResponseBody
+    @PutMapping("/like/{idpost}/{idUser}")
+    public String sendSimpleEmail(@PathVariable("idpost") long idpost , @PathVariable("idUser") long idUser) {
+
+
+        //like a post
+     //   ps.addlike(idpost,idUser);
+        // Create a Simple MailMessage.
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setTo(MyConstants.FRIEND_EMAIL);
+        message.setSubject("Test Simple Email");
+        message.setText("Hello, vouz avez aimez cet poste merci ");
+
+        // Send Message!
+        this.emailSender.send(message);
+
+        return "Email Sent!";
+    }
+    
 }
 
 

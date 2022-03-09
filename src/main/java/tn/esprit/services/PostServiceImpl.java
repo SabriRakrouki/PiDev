@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +21,10 @@ import tn.esprit.dto.PostDto;
 import tn.esprit.dto.PostResponse;
 import tn.esprit.entities.Post;
 import tn.esprit.repositories.CommentRepository;
+import tn.esprit.repositories.LikesRepository;
 import tn.esprit.repositories.PostRepository;
+import tn.esprit.repositories.TopicRepository;
+import tn.esprit.repositories.UserRepository;
 
 
 
@@ -28,7 +33,16 @@ public class PostServiceImpl implements IPostService {
 	
     @Autowired
     private PostRepository PostRepository;
+    @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private LikesRepository LikeRepository ;
+    
+    @Autowired
+    TopicRepository tr;
+
+    @Autowired
+    UserRepository userRepo;
     
 
 	public PostServiceImpl(PostRepository postRepository) {
@@ -88,12 +102,12 @@ public class PostServiceImpl implements IPostService {
     
  
     
-   @Override
+   /*@Override
 	public List<Topic> findByTopic(int id_topic) {
 		
 		return PostRepository.findByTopic(id_topic);
 	}
-    
+    */
     @Override
     public Post AddPost(Post Post) {
     
@@ -127,8 +141,37 @@ public class PostServiceImpl implements IPostService {
         return PostRepository.count();
     }
 
-  
+    @Override
+	public Post retrieveBestPosts() {
+		 int idpost = LikeRepository.getPostsWithMostLikes();
+		return PostRepository.findById(idpost).get();
+		
+	}
     
-}
+    @Override
+    @Transactional
+    public String addlike(int idPost , int idUser)
+    {
+        Post p = PostRepository.findById(idPost).get();
+        User u = userRepo.findById(idUser).get();
+        Like l = new Like();
+        l.setPosts(p);
+        return "okkkk!!";
+    }
+
+	@Override
+	public void AjouterEtAffecterPostToTopic(Post p, int id) {
+
+	   
+	        Topic topic = (Topic)this.tr.findById(id).get();
+	        p.setTopic(topic);
+	         PostRepository.save(p);
+	     //   return "post added !";
+
+	    }
+
+	}
+    
+
 
 

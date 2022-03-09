@@ -24,7 +24,13 @@ public interface ICommentService {
 
 	void saveComment(Comment comment);
 
+	void addCommentBypost(Comment e, int idpost);
 
+	List retrieveCooment(int id);
+
+	Comment AjouterEtAffecterCommentToPost(Comment f, int id);
+
+	
 	//List<Comment> findByPost(int id_post);
 
 	

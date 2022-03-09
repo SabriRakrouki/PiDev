@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,10 +43,11 @@ public class Post implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true)
 	private int id;
-	@Column(nullable = false)
+	
+	   
 	private String subject;
-    @Column(nullable = false)
-	private String content;
+    
+   private String content;
     @Column(nullable = true)
 	private String photo;
     @Column(nullable = false)
@@ -52,6 +55,7 @@ public class Post implements Serializable {
 	private Date DatePost;
 	@OneToMany(mappedBy="posts",cascade = CascadeType.ALL)
 	private Set<Comment> comments;
+	
 	@OneToMany(mappedBy="posts",cascade = CascadeType.ALL)
 	private Set<Like> likes;
 	
@@ -61,15 +65,16 @@ public class Post implements Serializable {
 	 @JsonIgnore
 	 @ManyToOne
 	 private User user;
-	 
+
 	
-	  @Transient
+	
+	  /*@Transient
 	    public String getPhotosImagePath() {
 	        if (photo == null) return null;
 	         
 	        return "C:\\uploads" + id + "/" + photo;
 	    }
-
+        */
 	
 	
 	

@@ -44,12 +44,12 @@ public class CommentController {
 	
 	 }
 	
-	/*@PostMapping("/addComment")
+	@PostMapping("/addComment")
 	@ResponseBody
 	public Comment  AddComment(@RequestBody Comment comment) {
 		return CommentService.AddComment(comment); 
 	   
-	}*/
+	}
 	
 	@PostMapping("/saveComment")
 	@ResponseBody
@@ -78,6 +78,26 @@ public class CommentController {
 	        return CommentService.findByPost(id_post);
 	    }
 	*/
+	 @PutMapping("/ajouterAndAffecter/{id}")
+	    @ResponseBody
+	    public String updateComments(@RequestBody Comment f, @PathVariable("id") int id) {
+	        this.CommentService.AjouterEtAffecterCommentToPost(f, id);
+	        return "Comments added and affected !!!";
+	    }
+	
+	
+	@SuppressWarnings("unchecked")
+	@GetMapping("/retrieve-comments/{Post-id}")
+	public List<Comment> getComments(@PathVariable("Post-id") int postId) {
+		List<Comment> listComment = CommentService.retrieveCooment(postId);
+		return listComment;
+	}
+	@PostMapping("/add-Comment/{Post-id}")
+	public void addComment(@RequestBody Comment e,@PathVariable("Post-id") int postId) {
+		//System.out.print(e.toString());
+		CommentService.addCommentBypost(e,postId);
+		
+	}
 }
 
 

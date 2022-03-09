@@ -31,13 +31,13 @@ public class Like implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idLikes;
 
-	private LocalDateTime timestamp;
+	private boolean isliked=true;
+	
 	
 	@ManyToOne
 	private Post posts;
 	
-	@OneToOne
-	@JoinColumn(name = "id_us_liked", referencedColumnName = "id")
+	@ManyToOne
 	private User user;
 
 	@OneToOne(cascade = CascadeType.ALL)

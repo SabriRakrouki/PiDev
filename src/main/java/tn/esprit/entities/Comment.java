@@ -47,18 +47,16 @@ public class Comment implements Serializable{
 	private int id;
 	
 	@Column(nullable = false)
-	@NotBlank
-	@Size(max =200,min=5)
 	private String content;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateComment;
 	
 
 		
-	/*@ManyToOne
+	@ManyToOne
 	@JoinColumn(name = "the_user_id")
 	private User user;
-*/
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "notifId")
 	private Notification notification;
