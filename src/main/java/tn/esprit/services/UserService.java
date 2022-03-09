@@ -50,7 +50,7 @@ public class UserService implements IuserService {
 		
 		
 		
-		return userRepository.UserStatistic(dateNow, dateWeek );
+		return userRepository.UserStatistic(date, weekDate(date) );
 	}
 	
 

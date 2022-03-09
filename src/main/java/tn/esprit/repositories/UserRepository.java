@@ -28,7 +28,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	    
 	    
 	    
-	    @Query("SELECT count(u) FROM User as  u WHERE u.dateCreation BETWEEN cast(:date1 as date)  AND cast(:date2  as date)")
+	    @Query("SELECT count(u) FROM User as  u WHERE u.dateCreation BETWEEN :date2   AND :date1  ")
 	   
-        public int UserStatistic(@Param("date1")String date1,@Param("date2")String date2);
+        public int UserStatistic(@Param("date1")Date date1,@Param("date2")Date date2);
 }

@@ -25,6 +25,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -54,7 +55,8 @@ public  abstract class User implements Serializable{
 	private String password;
 	private String phoneNumber;
 	private String Photo;
-	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	//@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreation;
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name ="users_roles", joinColumns = @JoinColumn(name="user_id"),inverseJoinColumns = @JoinColumn(name ="role_id"))
