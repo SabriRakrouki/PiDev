@@ -36,43 +36,17 @@ public class PaymentController {
 	@Autowired
 	private StripeService paymentsService;
 
-
-
 	@PostMapping("/charge")
-	public String charge(ChargeRequest chargeRequest)
-			throws StripeException {
-		ChargeRequest chargeRequest2 = new ChargeRequest();
-		chargeRequest2.setAmount(15);
-		chargeRequest2.setCurrency(Currency.USD);
-		chargeRequest2.setEmail("testmail");
-		chargeRequest2.setDescription("test hello");
-		chargeRequest2.setName("testst");
+	public String charge(ChargeRequest chargeRequest) throws StripeException {
 
-					
-			
-		return paymentsService.charge(chargeRequest2).toString();
+		return paymentsService.charge(chargeRequest).toString();
 
 	}
-	@PostMapping("/pay")
-	public String  string(ChargeRequest chargeRequest)
-			throws StripeException {
-		ChargeRequest chargeRequest2 = new ChargeRequest();
-		chargeRequest2.setAmount(15);
-		chargeRequest2.setCurrency(Currency.USD);
-		chargeRequest2.setEmail("testmail");
-		chargeRequest2.setDescription("test hello");
-		chargeRequest2.setName("testst");
 
-					
-			
-		return paymentsService.paymentMethod(chargeRequest2).toString();
-
-	}
 	@ExceptionHandler(StripeException.class)
 	public String handleError(Model model, StripeException ex) {
 		model.addAttribute("error", ex.getMessage());
 		return "result";
 	}
-
 
 }

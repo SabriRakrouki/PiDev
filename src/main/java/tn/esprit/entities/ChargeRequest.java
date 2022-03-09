@@ -26,6 +26,13 @@ public class ChargeRequest {
     private int amount;
     @Enumerated(EnumType.STRING)
     private Currency currency;
-    private String stripeEmail;
-    private String stripeToken;
+    private String cardNumber;
+    private String cvc;
+    private String exMonth;
+    private String exYear;
+    
+    
+    
+    
+   
 }
