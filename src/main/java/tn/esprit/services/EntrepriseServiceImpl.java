@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import tn.esprit.entities.ERole;
 import tn.esprit.entities.Entreprise;
 import tn.esprit.entities.Role;
+import tn.esprit.repositories.ComplaintRepository;
+import tn.esprit.repositories.EmployeRepository;
 import tn.esprit.repositories.EntrepriseRepository;
 import tn.esprit.repositories.RoleRepository;
 
@@ -69,6 +71,10 @@ public class EntrepriseServiceImpl  implements IEntrepriseService{
 	public Entreprise FindEntrepriseByemployeeId(int emplid) {
 		return entrepriseRepository.findByEmployeesId(emplid);	
 		
+	}
+	@Override
+	public List<Entreprise> getAllEntreprise() {
+		return entrepriseRepository.findAll();
 	}
 
 

@@ -12,6 +12,7 @@ public interface IEntrepriseService {
 	public Entreprise updateEntreprise(Entreprise entreprise);
 	public Entreprise FindEntrepriseById(int registre);
 	public Entreprise FindEntrepriseByemployeeId(int emplid);
+	public List<Entreprise> getAllEntreprise();
 
 
 	

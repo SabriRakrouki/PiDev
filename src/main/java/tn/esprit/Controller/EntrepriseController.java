@@ -54,8 +54,7 @@ public class EntrepriseController {
 		return entrepriseService.updateEntreprise(entreprise);
 	}
 
-	@Autowired
-	IEntrepriseService entrepriseService;
+
 
 	@GetMapping("/getEntreprises")
 	@ResponseBody

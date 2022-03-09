@@ -39,7 +39,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Inheritance(strategy =InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "user_type")
 
 @Getter
@@ -52,20 +52,6 @@ import lombok.ToString;
 
 public abstract class User implements Serializable {
 	public static final String PROPERTY_NAME_ID = "id";
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-@Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
