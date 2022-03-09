@@ -28,6 +28,6 @@ public class Invitation implements Serializable {
 	private int id;
 	private Date date;
 	private State state;
-	@OneToOne
-	private Employee employee;
+	//@OneToOne
+	//private Employee employee;
 }

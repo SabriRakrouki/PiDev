@@ -36,14 +36,19 @@ public class Trip implements Serializable {
 	private String Location;
 	private String city;
 	private String HotelName;
-	
 	private Date DepartDate;
-	
-	private Date ArrivalDate;
-	
+	private Date ArrivalDate;	
 	private String Description;
-	@OneToMany(cascade = CascadeType.ALL)
-	private Set<Program> programs;
+	
+	private Float attribution;
+	private Float totalattribution;
+	private Float compteur;
+	private Float note;
+	private String rating;
+	
+	
+	//@OneToMany(cascade = CascadeType.ALL)
+	// private Set<Program> programs;
 
 	
 	

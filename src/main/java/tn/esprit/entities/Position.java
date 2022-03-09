@@ -26,6 +26,6 @@ public class Position implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 private int id;
 private String potionName;
-@ManyToMany(mappedBy ="positions",cascade = CascadeType.ALL)
-private Set<Employee> employees;
+//@ManyToMany(mappedBy ="positions",cascade = CascadeType.ALL)
+//private Set<Employee> employees;
 }

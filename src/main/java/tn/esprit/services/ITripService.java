@@ -14,4 +14,6 @@ public interface ITripService {
 	public void DeleteTrip(int id);
 
 	public Trip FindTripById(int id);
+	public void NoterVoyage(Trip trip,Float Attribution);
+	
 }

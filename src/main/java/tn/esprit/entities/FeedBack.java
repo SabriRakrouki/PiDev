@@ -30,7 +30,7 @@ private int id;
 private String content;
 @Temporal(TemporalType.TIMESTAMP)
 private Date dateFeedBack;
-@ManyToOne
-private Entreprise entreprise;
+//@ManyToOne
+//private Entreprise entreprise;
 
 }

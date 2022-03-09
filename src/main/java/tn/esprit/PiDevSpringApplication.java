@@ -8,6 +8,7 @@ public class PiDevSpringApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PiDevSpringApplication.class, args);
+			
 	}
 
 }

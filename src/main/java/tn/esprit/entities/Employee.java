@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.UniqueConstraint;
 
@@ -26,13 +27,17 @@ import lombok.ToString;
 public class Employee extends User implements Serializable {
 	@Column(unique = true)
 	private String cin;
-	private String firstName;
+	private String FirstName;
 	private String lastName;
 	private int Age;
-	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	private Set<Position> positions;
-	@OneToOne
-	private Invitation invitation;
+	//@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	//private Set<Position> positions;
+	//@OneToOne
+	//private Invitation invitation;
+	
+	@ManyToOne
+	@ToString.Exclude
+	private Entreprise entreprise;
 	
 	
 }
