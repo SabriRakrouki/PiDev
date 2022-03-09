@@ -8,9 +8,11 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -33,18 +35,20 @@ public class Trip implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Id;
-	private String Location;
-	private String city;
-	private String HotelName;
-	
-	private Date DepartDate;
-	
-	private Date ArrivalDate;
-	
+	@ManyToOne
+	private Location tripLocation;
+
+	private Date departDate;
+
+	private Date arrivalDate;
+
 	private String Description;
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<Program> programs;
+	@ManyToOne
+	private Entreprise entreprise;
 
-	
-	
+	@OneToMany(cascade = CascadeType.ALL )
+	private Set<Employee> employee;
+
 }

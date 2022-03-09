@@ -1,15 +1,15 @@
 package tn.esprit.entities;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,15 +21,22 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment implements Serializable{
+public class Location {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String content;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateComment;
-	@ManyToOne
-	private Post post;
-	
+	private String country;
 
+	private String state;
+
+	private String city;
+
+	private String CountryTag;
+
+	private String StateTage;
+
+	@OneToMany
+	private Set<User> user;
+	@OneToMany
+	private Set<Trip> trips;
 }

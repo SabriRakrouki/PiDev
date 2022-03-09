@@ -1,12 +1,15 @@
 package tn.esprit.entities;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,4 +26,6 @@ public class Topic implements Serializable {
 private int id;
 	@Column(unique = true)
 private String nameTopic;
+	@OneToMany(cascade=CascadeType.ALL)
+private Set<Post> posts;
 }
