@@ -3,6 +3,8 @@ package tn.esprit.entities;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,8 +20,11 @@ public class ChargeRequest {
     public enum Currency {
         EUR, USD;
     }
+    private String name;
+    private String email;
     private String description;
     private int amount;
+    @Enumerated(EnumType.STRING)
     private Currency currency;
     private String stripeEmail;
     private String stripeToken;
