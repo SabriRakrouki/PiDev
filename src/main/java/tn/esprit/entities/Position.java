@@ -89,9 +89,5 @@ public class Position implements Serializable {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "Position [id=" + id + ", potionName=" + potionName + ", employees=" + employees + "]";
-	}
-
+	
 }

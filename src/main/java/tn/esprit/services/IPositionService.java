@@ -10,5 +10,6 @@ public interface IPositionService {
 	Position UpdatePosition(Position d);
 	Position DeletePosition(int id);
 	List<Position> GetAllPosition();
+	void affecterPositionEMPL(Position p,int idEmpl);
 
 }

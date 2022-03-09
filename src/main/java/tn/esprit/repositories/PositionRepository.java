@@ -9,4 +9,5 @@ import tn.esprit.entities.Program;
 @Repository
 public interface PositionRepository extends JpaRepository<Position, Integer>{
 
+	Position findBypotionName(String potionName);
 }

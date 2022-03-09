@@ -23,7 +23,7 @@ public class EmployeeServiceImpl implements IEmployeeService{
 
 	@Override
 	public List<Employee> retrieveAllEmployee() {
-		List<Employee> Employees = (List<Employee>)employeeRepository.findAll();
+		List<Employee> Employees = employeeRepository.findAll();
 		return Employees ;
 	}
 

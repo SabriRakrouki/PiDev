@@ -10,14 +10,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-@Entity
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Entity
 public class Domain implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String nameDomain;
 	@ManyToMany(mappedBy = "domains", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Set<Entreprise> entreprises;
 
 	public Domain() {
@@ -55,10 +57,7 @@ public class Domain implements Serializable {
 		this.entreprises = entreprises;
 	}
 
-	@Override
-	public String toString() {
-		return "Domain [id=" + id + ", nameDomain=" + nameDomain + ", entreprises=" + entreprises + "]";
-	}
+
 
 	@Override
 	public int hashCode() {

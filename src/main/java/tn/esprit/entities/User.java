@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,28 +11,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.ManyToMany;
-import javax.validation.constraints.NotBlank;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-
-import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
-@DiscriminatorColumn(name="user_type")
+@Inheritance
+@DiscriminatorColumn(name = "user_type")
+@Table(name = "user")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public  abstract class User implements Serializable{
+public class User implements Serializable{
 	public static final String PROPERTY_NAME_ID = "id";
 	  @Id
 	  @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -45,6 +41,7 @@ public  abstract class User implements Serializable{
 	private String password;
 	private String phoneNumber;
 	private String Photo;
+	private long code;
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name ="users_roles", joinColumns = @JoinColumn(name="user_id"),inverseJoinColumns = @JoinColumn(name ="role_id"))
     private Set<Role> roles = new HashSet<>();

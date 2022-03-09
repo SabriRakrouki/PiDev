@@ -56,5 +56,14 @@ public class PositionController {
 		
 	}
 	
+	@PutMapping("/afftctPOs/{idempl}")
+	@ResponseBody
+	public void afftctPOs( @RequestBody Position p,@PathVariable("idempl")int idempl) {
+		
+		PositionService.affecterPositionEMPL(p, idempl);
+		
+		
+	}
+	
 
 }

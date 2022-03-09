@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.entities.Entreprise;
+import tn.esprit.services.EntrepriseServiceImpl;
 import tn.esprit.services.IEntrepriseService;
 
 @RestController
 public class EntrepriseController {
 	@Autowired
-    private IEntrepriseService entrepriseService;
+    private EntrepriseServiceImpl entrepriseService;
 	//http://localhost:8090/travelup/back/add-entreprise
 	@PostMapping("/add-entreprise")
 	@ResponseBody
