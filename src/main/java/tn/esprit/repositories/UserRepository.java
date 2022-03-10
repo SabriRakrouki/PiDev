@@ -1,5 +1,7 @@
 package tn.esprit.repositories;
 
+
+
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +19,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import tn.esprit.entities.Employee;
+import tn.esprit.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
@@ -36,5 +49,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	public int UserStatistic(@Param("date1") Date date1, @Param("date2") Date date2);
 
 	public User findByEmail(String email);
+
+	@Query(value = "SELECT u FROM User u")
+	Collection<User> findAllemp();
 
 }

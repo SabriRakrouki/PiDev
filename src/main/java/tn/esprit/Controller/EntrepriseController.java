@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.entities.Entreprise;
+import tn.esprit.services.EntrepriseServiceImpl;
 import tn.esprit.services.IEntrepriseService;
 
 @RestController
@@ -28,6 +29,7 @@ public class EntrepriseController {
 
 	// http://localhost:8090/travelup/back/add-entreprise
 	@PostMapping("/signup/entreprise")
+
 	@ResponseBody
 	public void addEntreprise(@RequestBody Entreprise entreprise) {
 		entrepriseService.addEntreprise(entreprise);
@@ -53,8 +55,6 @@ public class EntrepriseController {
 	public Entreprise updateEntreprise(@RequestBody Entreprise entreprise) {
 		return entrepriseService.updateEntreprise(entreprise);
 	}
-
-
 
 	@GetMapping("/getEntreprises")
 	@ResponseBody

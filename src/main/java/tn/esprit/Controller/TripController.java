@@ -101,7 +101,7 @@ public class TripController {
 	}
 
 	@PostMapping("/addUser/{idTrip}")
-	@ResponseBody
+	//@ResponseBody
 	public Trip addUser(@PathVariable("idTrip") int idtrip, @RequestBody Employee employee) {
 
 		return iTripService.AddUserToTrip(employee, idtrip);

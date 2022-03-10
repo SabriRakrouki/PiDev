@@ -39,8 +39,9 @@ public class Entreprise extends User implements Serializable {
 	private Long Capacity;
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Domain> domains;
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "entreprise")
-	@JsonIgnore
+
 	private Set<Employee> employees;
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<FeedBack> feedBacks;

@@ -14,22 +14,28 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import javax.persistence.OneToOne;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 @Entity
+@DiscriminatorValue("Employe")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@DiscriminatorValue("Employee")
+@Table(name = "Employee")
+
 public class Employee extends User implements Serializable {
+	/**
+	 * 
+	 */
 	@Column(unique = true)
 	private String cin;
 	private String FirstName;
