@@ -20,8 +20,8 @@ public interface LocationService {
 	public List<Location> getCityByCountry(String tag) throws Exception;
 	public List<Location> getStatesbyCountry(String Ctag ) throws Exception;
 	public List<Location> GetcitiesbyStateAndCountry(String Ctag,String Stag ) throws Exception;
-	public Location addLocationToTrip(Location location,Trip trip);
-	public Location addLocationToEmployee(Location location,Employee employee);
+	public Location addLocationToTrip(int location,int trip);
+	public Location addLocationToEmployee(int location,int employee);
 	public Location addLocation(Location location);
 	public List<Location> getAllLocations();
 	public Location updateLocation(Location location);

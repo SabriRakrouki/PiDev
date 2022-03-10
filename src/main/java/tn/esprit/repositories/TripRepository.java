@@ -17,7 +17,7 @@ public interface TripRepository extends JpaRepository<Trip,Integer> {
 @Query("select t  from Trip as t,Employee as e where t.id=e.trip.id and   e.id=:user  ")
 public Set<Trip> findTripByuser(@Param("user") int user);
 
-@Query("select t from  Trip as t where t.id!=:id and t.arrivalDate BETWEEN :dateDebut and :dateFin ")
+@Query("select t from  Trip as t   where id!=:id and arrivalDate BETWEEN :dateFin and :dateDebut ")
 public Set<Trip> findTripByDate(@Param("dateDebut") Date dateDebut,@Param("dateFin") Date dateFin ,@Param("id") int id) ;
 
 

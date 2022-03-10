@@ -32,9 +32,9 @@ public class MatchingController {
 
 	@GetMapping("/{idtrip}/{emp}")
 	@ResponseBody
-	public Set<Employee> getMatching(@PathVariable("emp") int iduser, @PathVariable("idtrip") int idtrip) {
+	public List<Employee> getMatching(@PathVariable("emp") int iduser, @PathVariable("idtrip") int idtrip) {
 
-		Employee employee = employeeRepository.findById(iduser);
+		Employee employee = employeeRepository.findById(iduser).get();
 		Trip trip = tripRepository.findById(idtrip).orElse(null);
 
 		return matchingAlgoImp.getAllTheMatchingPeople(employee, trip);

@@ -43,18 +43,20 @@ public class Employee extends User implements Serializable {
 	private int Age;
 
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JsonIgnore
 	private Position position;
 	@OneToOne
 	private Invitation invitation;
 
 	@ManyToOne
-	@ToString.Exclude
+	@JsonIgnore
 	Entreprise entreprise;
 
 	
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JsonIgnore
 	private Trip trip;
 	
 }

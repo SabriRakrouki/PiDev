@@ -50,9 +50,11 @@ public class Entreprise extends User implements Serializable {
 	private Set<Complaint> complaints;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "entreprise")
+	@JsonIgnore
 	private Set<Invitation> invitations;
 
 	@OneToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Set<Trip> trips;
 
 }

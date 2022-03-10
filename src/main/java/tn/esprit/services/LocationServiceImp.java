@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.List;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import tn.esprit.entities.Employee;
 import tn.esprit.entities.Location;
 import tn.esprit.entities.Trip;
+import tn.esprit.repositories.EmployeeRepository;
+import tn.esprit.repositories.LocationRepository;
+import tn.esprit.repositories.TripRepository;
 
 
 
@@ -26,6 +30,12 @@ public class LocationServiceImp implements LocationService {
 	@Value("${APIKEY}")
 	private String secretKey;
 	List<Location> locations;
+	@Autowired
+	LocationRepository locationRepository;
+	@Autowired
+	EmployeeRepository employeeRepository;
+	@Autowired
+	TripRepository tripRepository;
 
 	public LocationServiceImp(List<Location> locations) {
 		// TODO Auto-generated constructor stub
@@ -272,37 +282,46 @@ public class LocationServiceImp implements LocationService {
 	@Override
 	public Location addLocation(Location location) {
 		// TODO Auto-generated method stub
-		return null;
+		return locationRepository.save(location);
 	}
 
 	@Override
 	public List<Location> getAllLocations() {
 		// TODO Auto-generated method stub
-		return null;
+		return locationRepository.findAll();
 	}
 
 	@Override
 	public Location updateLocation(Location location) {
 		// TODO Auto-generated method stub
-		return null;
+		return locationRepository.save(location);
 	}
 
 	@Override
 	public void deleteLocation(int id) {
 		// TODO Auto-generated method stub
-
+		locationRepository.deleteById(id);
 	}
 
 	@Override
-	public Location addLocationToTrip(Location location, Trip trip) {
+	public Location addLocationToTrip(int location, int trip) {
 		// TODO Auto-generated method stub
-		return null;
+		Location loc=locationRepository.findById(location).get();
+		
+		Trip trips=tripRepository.findById(trip).get();
+		trips.setTripLocation(loc);
+		tripRepository.save(trips);
+		return loc;
 	}
 
 	@Override
-	public Location addLocationToEmployee(Location location, Employee employee) {
+	public Location addLocationToEmployee(int location, int employee) {
 		// TODO Auto-generated method stub
-		return null;
+		Employee emp= employeeRepository.findById(employee).get();
+		Location loc=locationRepository.findById(location).get();
+		emp.setBornePlace(loc);
+		employeeRepository.save(emp);
+		return loc;
 	}
 
 }

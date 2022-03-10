@@ -65,7 +65,6 @@ public class TripController {
 	@Autowired
 	protected ITripService iTripService;
 	@Autowired
-
 	LocationService locationService;
 	@Autowired
 	EmployeeRepository employeeRepository;
@@ -116,12 +115,19 @@ public class TripController {
 
 	}
 
-	@PostMapping("/addUser/{idTrip}")
-	//@ResponseBody
-	public Trip addUser(@PathVariable("idTrip") int idtrip, @RequestBody Employee employee) {
+	@PostMapping("/addUser/{idTrip}/{iduser}")
+	@ResponseBody
+	public Trip addUser(@PathVariable("idTrip") int idtrip, @PathVariable("iduser") int iduser) {
 
-		return iTripService.AddUserToTrip(employee, idtrip);
+		return iTripService.AddUserToTrip(iduser, idtrip);
 	}
+	
+	@PostMapping("/addLocation/{idLoc}/{idTrip}")
+	@ResponseBody
+	public Location addLocationToTrip(@PathVariable("idLoc")int loc,@PathVariable("idTrip") int tip) {
+		return locationService.addLocationToTrip(loc, tip);
+	}
+	
 
 	@GetMapping("/countries")
 	@ResponseBody
@@ -199,7 +205,7 @@ public class TripController {
 		System.out.println(tripp.getCompteur());
 		System.out.println(tripp.getTotalattribution());
 		System.out.println(tripp.getNote());
-		sendEmail("safa.chaouali.750@gmail.com");
+		sendEmail(tripp.getEntreprise().getEmail());
 		// @EventListener(ApplicationReadyEvent.class)
 		/*
 		 * senderService.sendSimpleMessage("safa.chaouali.750@gmail.com",

@@ -20,6 +20,9 @@ import javax.persistence.OneToOne;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,13 +34,13 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+
 public class Trip implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Id;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER )
 	private Location tripLocation;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date departDate;
@@ -45,12 +48,15 @@ public class Trip implements Serializable {
 	private Date arrivalDate;
 
 	private String Description;
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "trip",fetch = FetchType.EAGER)
+	@JsonIgnore
 	private Set<Program> programs;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+	@JsonIgnore
 	private Entreprise entreprise;
-
-	@OneToMany(cascade = CascadeType.ALL )
+	
+	@OneToMany(cascade = CascadeType.ALL ,mappedBy ="trip" ,fetch = FetchType.LAZY)
+	@JsonIgnore
 	private Set<Employee> employee;
 
 	

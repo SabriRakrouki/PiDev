@@ -1,5 +1,6 @@
 package tn.esprit.services;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -30,6 +31,6 @@ public interface MatchAlgorithm {
 
 	public boolean checkPostion(Employee employeeToMatch, Employee employee);
 
-	public Set<Employee> getAllTheMatchingPeople(Employee user,Trip trip) ;
+	public List<Employee> getAllTheMatchingPeople(Employee user,Trip trip) ;
 
 }

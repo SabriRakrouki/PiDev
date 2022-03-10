@@ -21,7 +21,7 @@ public class EmployeServiceImpl implements IEmployeService {
 	}
 	@Override
 	public Employee FindEmployeeById(int id) {
-Employee e=employeeRepository.findById(id);
+Employee e=employeeRepository.findById(id).get();
 		return e;
 	}
 	

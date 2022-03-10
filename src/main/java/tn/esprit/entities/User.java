@@ -8,33 +8,14 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-
-import javax.persistence.InheritanceType;
-
-import javax.persistence.JoinTable;
 import javax.persistence.*;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
@@ -77,7 +58,8 @@ public abstract class User implements Serializable {
 
 	@ElementCollection
 	private Set<String> languages;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY )
+	@JsonIgnore
 	private Location BornePlace;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")

@@ -21,14 +21,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lowagie.text.DocumentException;
 
 import tn.esprit.entities.Employee;
+import tn.esprit.entities.Location;
 import tn.esprit.services.IEmployeeService;
+import tn.esprit.services.LocationService;
 import tn.esprit.services.UserPDFExporter;
 
 @RestController
 public class EmployeeController {
 	@Autowired
     private IEmployeeService employeeService;
-	
+	@Autowired
+	private LocationService locationService;
 	 @GetMapping("/users/export/pdf")
 	    public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
 	        response.setContentType("application/pdf");
@@ -73,6 +76,13 @@ public class EmployeeController {
 		@ResponseBody
 		public Employee updateEmployee(@RequestBody Employee employee) {
 			return employeeService.updateEmployee(employee);
+		}
+		
+		
+		@PostMapping("/addBornLocation/{idEmp}/{idLoc}")
+		@ResponseBody
+		public Location addBornLocation(@PathVariable("idEmp") int emp,@PathVariable("idLoc")int loc) {
+			return locationService.addLocationToEmployee(loc, emp);
 		}
 		
 }

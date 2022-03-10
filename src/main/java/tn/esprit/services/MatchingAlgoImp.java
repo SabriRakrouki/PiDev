@@ -122,6 +122,12 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 			}
 
 		}
+		if(entrepriseToMatch.getDomains().size()==0) {
+			return true;
+		}
+		if(entreprise.getDomains().size()==0) {
+			return true;
+		}
 
 		return false;
 	}
@@ -146,46 +152,53 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 		return false;
 	}
 
-	public Set<Employee> getAllTheMatchingPeople(Employee user, Trip tripToMatch) {
+	public List<Employee> getAllTheMatchingPeople(Employee user, Trip tripToMatch) {
 
-		try {
+		
 			Set<Trip> trips= this.findTripByDate(tripToMatch);
 				
+			log.info("here we got the trips"+trips.size());
 			
 			for (Trip trip : trips) {
-
+				log.info(trip.toString());
 				if (trip.getTripLocation().getCountry().equals(tripToMatch.getTripLocation().getCountry())) {
-
-					Set<Employee> usersToMatch = new HashSet<Employee>();
-			
-						usersToMatch = trip.getEmployee();
-					
-
+					log.info("here we chetched location");
+					Set<Employee> usersToMatch = usersToMatch = trip.getEmployee();
+					log.info("here we get users"+trip.getEmployee().size());
+						
 					for (Employee emp : usersToMatch) {
+						log.info("test");
 						if (checkdomainEntreprise(user.getEntreprise(), emp.getEntreprise())) {
+							log.info("here we get checked domain");
 							score = 0;
-							if (checkPostion(emp, user)) {
+						/*	if (checkPostion(emp, user)) {
 								score = score + POSTIONSCORE;
-							}
+								log.info(emp.getCin());
+							}*/
 							if (ageGap(user.getAge(), emp.getAge())) {
 								score = score + AGESCORE;
+								log.info(emp.getFirstName());
 
 							}
 							if (bornCheck(emp, user)) {
 								score = score + BORNSCORE;
+								log.info(emp.getEmail());
 							}
 
 							if (checkStates(trip.getTripLocation().getState(),
 									tripToMatch.getTripLocation().getState())) {
+								log.info("state");
 								score = score + STATESCORE;
 								if (checkCity(trip.getTripLocation().getCity(),
 										tripToMatch.getTripLocation().getCity())) {
+									log.info("city");
 									score = score + CITYTRIPSCORE;
 								}
 							}
 
 							if (languageCheck(emp, user)) {
 								score = score + LANGUAGESCORE;
+								log.info("lang");
 							}
 
 							log.info(user.getCin());
@@ -198,20 +211,11 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 
 			}
 
-			List<Employee> employeesRes = (List<Employee>) mapuser.descendingMap().values();
-			for (Employee em : employeesRes) {
+			List<Employee> employeesRes =  mapuser.descendingMap().values().stream().toList();
+			
 
-				if (!em.equals(user)) {
-					userMatched.add(em);
-				}
-
-			}
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			log.info(e.getMessage());
-		}
-		return userMatched;
+		
+		return employeesRes;
 
 	}
 

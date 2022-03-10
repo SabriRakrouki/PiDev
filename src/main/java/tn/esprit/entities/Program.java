@@ -3,6 +3,7 @@ package tn.esprit.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,7 +30,7 @@ public class Program implements Serializable{
 	private Date DateProgram;
 	private String Description;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Trip trip;
 	
 
