@@ -29,7 +29,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+
 @Table(name = "Employee")
 
 public class Employee extends User implements Serializable {

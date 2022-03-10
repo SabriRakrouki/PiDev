@@ -1,5 +1,6 @@
 package tn.esprit.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 	TripRepository tripRepository;
 
 	Set<Employee> userMatched;
-
+	List<Employee> employeesRes ;
 	TreeMap<Integer, Employee> mapuser;
 
 	int score;
@@ -153,7 +154,7 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 	}
 
 	public List<Employee> getAllTheMatchingPeople(Employee user, Trip tripToMatch) {
-
+		List<Employee> employeesRes= new ArrayList<Employee>();
 		
 			Set<Trip> trips= this.findTripByDate(tripToMatch);
 				
@@ -200,9 +201,10 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 								score = score + LANGUAGESCORE;
 								log.info("lang");
 							}
-
-							log.info(user.getCin());
-							mapuser.put(score, user);
+							
+							log.info("user score :"+score+emp.getAge()+emp.getId());
+							employeesRes.add(emp);
+							mapuser.put(score+emp.getAge()+emp.getId(), user);
 						}
 
 					}
@@ -211,8 +213,7 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 
 			}
 
-			List<Employee> employeesRes =  mapuser.descendingMap().values().stream().toList();
-			
+			log.info("test"+employeesRes.size());
 
 		
 		return employeesRes;

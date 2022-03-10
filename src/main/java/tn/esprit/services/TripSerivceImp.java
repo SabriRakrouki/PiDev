@@ -103,7 +103,7 @@ public class TripSerivceImp implements ITripService {
 	public Trip AddUserToTrip(int employee, int idtrip) {
 		// TODO Auto-generated method stub
 		Trip trip=tripRepository.findById(idtrip).orElse(null);
-		Set<Employee> employees=trip.getEmployee();
+		
 		Employee emp=employeeRepository.findById(employee).get();
 		emp.setTrip(trip);
 		log.info(emp.toString());

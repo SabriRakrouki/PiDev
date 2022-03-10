@@ -29,7 +29,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+
 @DiscriminatorValue("Entreprise")
 public class Entreprise extends User implements Serializable {
 
