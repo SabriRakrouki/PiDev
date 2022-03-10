@@ -17,7 +17,7 @@ import tn.esprit.services.ProfilServiceINT;
 
 @RestController
 @RequestMapping("/Profile")
-public class ProfileController {
+public class ProfileUserController {
 	@Autowired
 	UserRepository userRepository;
 	@Autowired

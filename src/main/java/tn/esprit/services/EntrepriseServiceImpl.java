@@ -1,7 +1,5 @@
 package tn.esprit.services;
 
-
-
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
@@ -16,22 +14,24 @@ import tn.esprit.entities.ERole;
 import tn.esprit.entities.Entreprise;
 import tn.esprit.entities.Role;
 import tn.esprit.repositories.ComplaintRepository;
-import tn.esprit.repositories.EmployeRepository;
+
+import tn.esprit.repositories.EmployeeRepository;
 import tn.esprit.repositories.EntrepriseRepository;
 import tn.esprit.repositories.RoleRepository;
 
 @Service
-public class EntrepriseServiceImpl  implements IEntrepriseService{
+public class EntrepriseServiceImpl implements IEntrepriseService {
 	@Autowired
-	EntrepriseRepository entrepriseRepository ;
+	EntrepriseRepository entrepriseRepository;
 	@Autowired
-	RoleRepository roleRepository ;
+	RoleRepository roleRepository;
 	@Autowired
-	EmployeRepository employeeRepository;
+	EmployeeRepository employeeRepository;
 	@Autowired
 	ComplaintRepository complaintRepository;
 
 	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 	@Override
 	public void addEntreprise(Entreprise entreprise) {
 		Role userRole = roleRepository.getByName(ERole.ROLE_EMPLOYEE);
@@ -45,13 +45,13 @@ public class EntrepriseServiceImpl  implements IEntrepriseService{
 
 	@Override
 	public List<Entreprise> retrieveAllEntreprise() {
-		List<Entreprise> Entreprises = (List<Entreprise>)entrepriseRepository.findAll();
-		return Entreprises ;
+		List<Entreprise> Entreprises = (List<Entreprise>) entrepriseRepository.findAll();
+		return Entreprises;
 	}
 
 	@Override
 	public void deleteEntreprise(int id) {
-	//	entrepriseRepository.deleteById(id);
+		// entrepriseRepository.deleteById(id);
 	}
 
 	@Override
@@ -59,23 +59,22 @@ public class EntrepriseServiceImpl  implements IEntrepriseService{
 		entreprise.setPassword(passwordEncoder.encode(entreprise.getPassword()));
 		return entrepriseRepository.save(entreprise);
 	}
+
 	@Override
 	public Entreprise FindEntrepriseById(int registre) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
-
 	@Override
 	public Entreprise FindEntrepriseByemployeeId(int emplid) {
-		return entrepriseRepository.findByEmployeesId(emplid);	
-		
+		return entrepriseRepository.findByEmployeesId(emplid);
+
 	}
+
 	@Override
 	public List<Entreprise> getAllEntreprise() {
 		return entrepriseRepository.findAll();
 	}
-
 
 }

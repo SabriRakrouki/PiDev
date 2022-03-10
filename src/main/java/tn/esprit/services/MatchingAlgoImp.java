@@ -149,26 +149,17 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 	public Set<Employee> getAllTheMatchingPeople(Employee user, Trip tripToMatch) {
 
 		try {
-			Set<Trip> trips=null;
-			try {
-			 trips= this.findTripByDate(tripToMatch);
+			Set<Trip> trips= this.findTripByDate(tripToMatch);
 				
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.getMessage();
-			}
+			
 			for (Trip trip : trips) {
 
 				if (trip.getTripLocation().getCountry().equals(tripToMatch.getTripLocation().getCountry())) {
 
 					Set<Employee> usersToMatch = new HashSet<Employee>();
-					try {
+			
 						usersToMatch = trip.getEmployee();
-					} catch (Exception e) {
-						// TODO: handle exception
-						e.getMessage();
-						
-					}
+					
 
 					for (Employee emp : usersToMatch) {
 						if (checkdomainEntreprise(user.getEntreprise(), emp.getEntreprise())) {

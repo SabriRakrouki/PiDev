@@ -31,7 +31,7 @@ public class Position implements Serializable {
 
 	private int id;
 	private String potionName;
-	@ManyToMany(mappedBy = "positions", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "position", cascade = CascadeType.ALL)
 	private Set<Employee> employees;
 
 	

@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 import lombok.AllArgsConstructor;
@@ -38,9 +39,9 @@ public class Trip implements Serializable {
 
 	@ManyToOne
 	private Location tripLocation;
-
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date departDate;
-
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date arrivalDate;
 
 	private String Description;

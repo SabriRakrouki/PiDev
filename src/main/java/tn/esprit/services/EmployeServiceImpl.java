@@ -8,20 +8,20 @@ import org.springframework.stereotype.Service;
 import tn.esprit.entities.Complaint;
 import tn.esprit.entities.Employee;
 import tn.esprit.repositories.ComplaintRepository;
-import tn.esprit.repositories.EmployeRepository;
+import tn.esprit.repositories.EmployeeRepository;
 
 @Service
 public class EmployeServiceImpl implements IEmployeService {
 	@Autowired
-	private EmployeRepository employeRepository;
+	private EmployeeRepository employeeRepository;
 	@Override
 	public List<Employee> getAllEmploye() {
-		return employeRepository.findAll();
+		return employeeRepository.findAll();
 		
 	}
 	@Override
 	public Employee FindEmployeeById(int id) {
-Employee e=employeRepository.findById(id);
+Employee e=employeeRepository.findById(id);
 		return e;
 	}
 	

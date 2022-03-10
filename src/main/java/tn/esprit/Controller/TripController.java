@@ -32,6 +32,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,10 +47,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import tn.esprit.entities.Employee;
+import tn.esprit.entities.Entreprise;
 import tn.esprit.entities.Location;
 import tn.esprit.entities.Complaint;
 import tn.esprit.entities.Trip;
+import tn.esprit.entities.User;
 import tn.esprit.repositories.EmployeeRepository;
+import tn.esprit.repositories.EntrepriseRepository;
 import tn.esprit.services.ITripService;
 import tn.esprit.services.LocationService;
 import tn.esprit.services.PDFGeneratorService;
@@ -64,13 +69,24 @@ public class TripController {
 	LocationService locationService;
 	@Autowired
 	EmployeeRepository employeeRepository;
+	@Autowired
+	EntrepriseRepository userRepository;
 	private JavaMailSender mailSender;
 
 	@PostMapping("/addTrip")
 
 	@ResponseBody
-	public ResponseEntity<String> addTrip(Trip trip) {
-
+	public ResponseEntity<String> addTrip(@RequestBody Trip trip) {
+		String username;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+            } else {
+             username = principal.toString();
+            }
+        Entreprise us= userRepository.findByUsername(username).orElse(null);
+        
+        trip.setEntreprise( us);
 		iTripService.AddTrip(trip);
 		return ResponseEntity.ok("Trip created");
 
@@ -86,9 +102,9 @@ public class TripController {
 
 	@GetMapping("/getAll")
 	@ResponseBody
-	public ResponseEntity<List<Trip>> getAllTrip() {
+	public List<Trip> getAllTrip() {
 
-		return ResponseEntity.status(200).body(iTripService.getAllTrip());
+		return iTripService.getAllTrip();
 	}
 
 	@DeleteMapping("/deleteTrip/{idTrip}")

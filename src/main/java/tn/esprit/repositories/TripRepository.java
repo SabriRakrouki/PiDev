@@ -14,15 +14,14 @@ import tn.esprit.entities.Trip;
 import tn.esprit.entities.User;
 @Repository
 public interface TripRepository extends JpaRepository<Trip,Integer> {
-@Query("select t  from Trip as t,Employee as e where   e.id=:user  ")
+@Query("select t  from Trip as t,Employee as e where t.id=e.trip.id and   e.id=:user  ")
 public Set<Trip> findTripByuser(@Param("user") int user);
 
-@Query("select t from  Trip as t where t.id!=:id and t.arrivalDate BETWEEN :dateDebut and :dateFin")
+@Query("select t from  Trip as t where t.id!=:id and t.arrivalDate BETWEEN :dateDebut and :dateFin ")
 public Set<Trip> findTripByDate(@Param("dateDebut") Date dateDebut,@Param("dateFin") Date dateFin ,@Param("id") int id) ;
 
 
-@Query( "select t from Trip as t, Location as l where t.tripLocation.id=l.id and l.id=:locationTrip")
-public Set<Trip> findTripByLocation(@Param("locationTrip") Location Location);
+
 
 
 

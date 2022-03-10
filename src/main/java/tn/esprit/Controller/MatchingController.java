@@ -34,7 +34,7 @@ public class MatchingController {
 	@ResponseBody
 	public Set<Employee> getMatching(@PathVariable("emp") int iduser, @PathVariable("idtrip") int idtrip) {
 
-		Employee employee = employeeRepository.findById(iduser).orElse(null);
+		Employee employee = employeeRepository.findById(iduser);
 		Trip trip = tripRepository.findById(idtrip).orElse(null);
 
 		return matchingAlgoImp.getAllTheMatchingPeople(employee, trip);

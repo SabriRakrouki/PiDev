@@ -13,7 +13,7 @@ import tn.esprit.entities.Entreprise;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee,Integer>{
 	Optional<Employee> findByUsername(String username);
-	
+	Employee findById(int id);
 	
 }
 

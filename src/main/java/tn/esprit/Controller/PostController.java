@@ -144,7 +144,7 @@ public class PostController {
 
     @ResponseBody
     @PutMapping("/like/{idpost}/{idUser}")
-    public String sendSimpleEmail(@PathVariable("idpost") long idpost , @PathVariable("idUser") long idUser) {
+    public String sendSimpleEmail(@PathVariable("idpost") int idpost , @PathVariable("idUser") long idUser) {
 
 
         //like a post
@@ -152,7 +152,7 @@ public class PostController {
         // Create a Simple MailMessage.
         SimpleMailMessage message = new SimpleMailMessage();
 
-        message.setTo(MyConstants.FRIEND_EMAIL);
+        message.setTo(postRepo.getById(idpost).getUser().getEmail());
         message.setSubject("Test Simple Email");
         message.setText("Hello, vouz avez aimez cet poste merci ");
 

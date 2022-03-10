@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +32,7 @@ import tn.esprit.repositories.UserRepository;
 import tn.esprit.services.IAdminService;
 import tn.esprit.services.IuserService;
 @RestController
+
 public class AdminController {
 	@Autowired
     private IAdminService adminService;
