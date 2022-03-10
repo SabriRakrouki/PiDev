@@ -63,22 +63,19 @@ public class PositionServiceImp implements IPositionService {
 		if (Position == null) {
 			se.add(e);
 
-			if (e.getPositions().size() == 0) {
+			if (e.getPosition() == null) {
 				NewPosition.setEmployees(se);
 				positionRepository.save(NewPosition);
-			} else
-				if(e.getPositions().size()!=0)
-			{
-				e.getPositions().add(NewPosition);
+			} else if (e.getPosition() != null) {
+				e.setPosition(NewPosition);
 				positionRepository.save(NewPosition);
-				//empRepo.save(e);
-				
+				// empRepo.save(e);
 
 			}
 
 		} else {
 
-			e.getPositions().add(Position);
+			e.setPosition(Position);
 			empRepo.save(e);
 
 		}

@@ -34,16 +34,7 @@ public class Position implements Serializable {
 	@ManyToMany(mappedBy = "positions", cascade = CascadeType.ALL)
 	private Set<Employee> employees;
 
-	public Position() {
-		super();
-	}
-
-	public Position(int id, String potionName, Set<Employee> employees) {
-		super();
-		this.id = id;
-		this.potionName = potionName;
-		this.employees = employees;
-	}
+	
 
 	@Override
 	public int hashCode() {

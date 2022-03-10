@@ -101,17 +101,17 @@ public class ProfilService implements ProfilServiceINT {
 		
 		Lemp.addAll(entreprise.getEmployees());
 		for (Employee employee : Lemp) {
-			Lp.addAll(employee.getPositions());
-			for (Position posEmp : Lp) {
+			
+		
 				
-				if(PosnameSize.containsKey(posEmp.getPotionName())) {
-					int i=PosnameSize.get(posEmp.getPotionName());
+				if(PosnameSize.containsKey(employee.getPosition().getPotionName())) {
+					int i=PosnameSize.get(employee.getPosition().getPotionName());
 					i++;
-					PosnameSize.put(posEmp.getPotionName(), i);
+					PosnameSize.put(employee.getPosition().getPotionName(), i);
 				}
 				else
 				{
-					PosnameSize.put(posEmp.getPotionName(), 1);
+					PosnameSize.put(employee.getPosition().getPotionName(), 1);
 				}
 				
 				   for (Map.Entry mapentry : PosnameSize.entrySet()) {
@@ -121,7 +121,7 @@ public class ProfilService implements ProfilServiceINT {
 					
 				
 				
-			}
+			
 		}
 		return PosnameSize;
 		
