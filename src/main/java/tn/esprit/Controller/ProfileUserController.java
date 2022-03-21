@@ -16,57 +16,61 @@ import tn.esprit.repositories.UserRepository;
 import tn.esprit.services.ProfilServiceINT;
 
 @RestController
-@RequestMapping("/Profile")
+@RequestMapping("/api/v1/profile")
 public class ProfileUserController {
-	@Autowired
-	UserRepository userRepository;
-	@Autowired
-	ProfilServiceINT uservice;	
-	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-	public static String password;
+
+	private final UserRepository userRepository;
+	private final ProfilServiceINT uservice;
+	private final PasswordEncoder passwordEncoder;
+	private static String password;
+
+	public ProfileUserController(UserRepository userRepository, ProfilServiceINT uservice) {
+		this.passwordEncoder = new BCryptPasswordEncoder();
+		this.userRepository = userRepository;
+		this.uservice = uservice;
+	}
 
 	@PutMapping("/changePassword/{Password}/{newPassword}/{username}")
-    public Boolean changePswordverif1(@PathVariable("newPassword") String newPassword,
-            @PathVariable("username") String username, @PathVariable("Password") String password) {
+	public Boolean changePswordverif1(@PathVariable("newPassword") String newPassword,
+			@PathVariable("username") String username, @PathVariable("Password") String password) {
 
 		User u = userRepository.findByUsername(username).get();
-        System.out.println("**IN CONTROLLER**");
-        System.out.println("" + u.toString());
-        System.out.println("**IN CONTROLLER**");
+		System.out.println("**IN CONTROLLER**");
+		System.out.println("" + u.toString());
+		System.out.println("**IN CONTROLLER**");
 
-        Boolean test2 = null;
+		Boolean test2 = null;
 
-        test2 = uservice.VerifPassword(newPassword, username, password);
-        System.out.println("test2" + test2);
-        if (test2) {
-            this.password=newPassword;
-            System.out.println("password changing...");
-            return true;
-        } else {
-            return false;
-        }
+		test2 = uservice.VerifPassword(newPassword, username, password);
+		System.out.println("test2" + test2);
+		if (test2) {
+			this.password = newPassword;
+			System.out.println("password changing...");
+			return true;
+		} else {
+			return false;
+		}
 
-    }
+	}
 
-    @PutMapping("/userCode/{code}/{id}")
-    public void changepas2(@PathVariable("code") long code,@PathVariable("id") int id){
-    	User u = userRepository.findById(id).get();
-        Boolean test = uservice.verifaccount(code, u.getId());
+	@PutMapping("/userCode/{code}/{id}")
+	public void changepas2(@PathVariable("code") long code, @PathVariable("id") int id) {
+		User u = userRepository.findById(id).get();
+		Boolean test = uservice.verifaccount(code, u.getId());
 
+		if (test) {
+			u.setPassword(passwordEncoder.encode(this.password));
+			userRepository.save(u);
+			System.out.println("password Changed successfully...");
 
-        if (test) {
-            u.setPassword(passwordEncoder.encode( this.password));
-            userRepository.save(u);
-            System.out.println("password Changed successfully...");
+		}
 
-    }
-      
-    }
-    
-    @GetMapping("/stat/{idENT}")
-    public HashMap<String, Integer> stat(@PathVariable("idENT") int identreprise){
-     
-    	 return uservice.Statestique(identreprise);
-    	
-    }
+	}
+
+	@GetMapping("/stat/{idENT}")
+	public HashMap<String, Integer> stat(@PathVariable("idENT") int identreprise) {
+
+		return uservice.Statestique(identreprise);
+
+	}
 }

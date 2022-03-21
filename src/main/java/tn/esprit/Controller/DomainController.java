@@ -18,59 +18,61 @@ import tn.esprit.entities.Domain;
 import tn.esprit.services.DomainServiceImp;
 import tn.esprit.services.IDomainService;
 
-
 @RestController
-@RequestMapping("/domain")
+@RequestMapping("/api/v1/domain")
 public class DomainController {
-	@Autowired
-	DomainServiceImp DomainService;
-	
+	private final DomainServiceImp DomainService;
+
+	public DomainController(DomainServiceImp domainService) {
+		super();
+		DomainService = domainService;
+	}
+
 	@PostMapping("/addDomain")
 	@ResponseBody
 	public Domain addDomain(@RequestBody Domain d) {
-		
-			return DomainService.AddDomain(d);
-		
+
+		return DomainService.AddDomain(d);
+
 	}
-	
+
 	@PutMapping("/updateDomain/{id}")
 	@ResponseBody
-	public Domain updateDomain( @RequestBody Domain d,@PathVariable("id")int id) {
-		
-			return DomainService.UpdateDomain(d,id);
-		
-		
+	public Domain updateDomain(@RequestBody Domain d, @PathVariable("id") int id) {
+
+		return DomainService.UpdateDomain(d, id);
+
 	}
-	
+
 	@DeleteMapping("/deletDomain/{id}")
 	@ResponseBody
-	public Domain deletDomain( @PathVariable("id")  int id) {
-		
-			return DomainService.DeleteDomain(id);
-		
+	public Domain deletDomain(@PathVariable("id") int id) {
+
+		return DomainService.DeleteDomain(id);
+
 	}
-	
+
 	@RequestMapping("/getallDomain")
 	@ResponseBody
-	public List<Domain> getallDomain( ) {
-		
-			return DomainService.GetAllDomains();
-		
+	public List<Domain> getallDomain() {
+
+		return DomainService.GetAllDomains();
+
 	}
-	
+
 	@PutMapping("/afftcterent/{identre}")
 	@ResponseBody
-	public void afftcterent( @RequestBody Domain d,@PathVariable("identre")int identre) {
-			System.out.println("**** "+identre);
-			 DomainService.affecterDomainEntrePrise(d, identre);
-		
-		
+	public void afftcterent(@RequestBody Domain d, @PathVariable("identre") int identre) {
+		System.out.println("**** " + identre);
+		DomainService.affecterDomainEntrePrise(d, identre);
+
 	}
+
 	@GetMapping("/retrieveDomainsparEntreprises/{entreprise-id}")
 	@ResponseBody
-	public Set<Domain>retrieveAllDomainsparEntreprise(@PathVariable("entreprise-id") int entrepriseId) {
+	public Set<Domain> retrieveAllDomainsparEntreprise(@PathVariable("entreprise-id") int entrepriseId) {
 
-		 return DomainService.GetAllDomainsparent(entrepriseId);
+		return DomainService.GetAllDomainsparent(entrepriseId);
 	}
 
 }

@@ -10,10 +10,15 @@ import tn.esprit.repositories.ArchiveComplaintRepository;
 
 @Service
 public class ArchiveComplaintsServiceImpl implements IArchiveComplaintsService {
-	@Autowired
-	ArchiveComplaintRepository archivecomplaintsRepository;
+
+	private final ArchiveComplaintRepository archivecomplaintsRepository;
 	
 	
+	
+	public ArchiveComplaintsServiceImpl(ArchiveComplaintRepository archivecomplaintsRepository) {
+		this.archivecomplaintsRepository = archivecomplaintsRepository;
+	}
+
 	@Override
 	public ArchiveComplaints AddArchiveComplaint(ArchiveComplaints archivecomplaint) {
 		archivecomplaintsRepository.save(archivecomplaint);

@@ -16,30 +16,31 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
-import tn.esprit.entities.Complaint; 
+import tn.esprit.entities.Complaint;
 import tn.esprit.entities.Entreprise;
 import tn.esprit.repositories.ComplaintRepository;
 import tn.esprit.repositories.EntrepriseRepository;
 
-
-
-
 @Service
 @Transactional
 public class ComplaintServiceImpl implements IComplaintService {
-	@Autowired 
-	ComplaintRepository complaintRepository;
-	@Autowired
-	EntrepriseRepository entrepriseRepository;
-	
-	
-	
-	/*public ComplaintServiceImpl(ComplaintRepository complaintRepository) {
-		// TODO Auto-generated constructor stub
+
+	private final ComplaintRepository complaintRepository;
+
+	private final EntrepriseRepository entrepriseRepository;
+
+	/*
+	 * public ComplaintServiceImpl(ComplaintRepository complaintRepository) { //
+	 * TODO Auto-generated constructor stub this.complaintRepository =
+	 * complaintRepository; }
+	 */
+
+	public ComplaintServiceImpl(ComplaintRepository complaintRepository, EntrepriseRepository entrepriseRepository) {
+		super();
 		this.complaintRepository = complaintRepository;
-	}*/
-	
-	
+		this.entrepriseRepository = entrepriseRepository;
+	}
+
 	@Override
 	public List<Complaint> getAllComplaint() {
 		return complaintRepository.findAll();
@@ -49,25 +50,22 @@ public class ComplaintServiceImpl implements IComplaintService {
 	public Complaint AddComplaint(Complaint complaint) {
 		complaintRepository.save(complaint);
 		return complaint;
-		
-	}
 
-	
+	}
 
 	@Override
 	public void DeleteComplaint(int id) {
-		//complaintRepository.delete(complaintRepository.getById(id));
+		// complaintRepository.delete(complaintRepository.getById(id));
 		complaintRepository.deleteById(id);
 	}
 
 	@Override
 	public Complaint FindComplaintById(int id) {
-		//return complaintRepository.getById(id);
-Complaint c = complaintRepository.findById(id).get();
-		
+		// return complaintRepository.getById(id);
+		Complaint c = complaintRepository.findById(id).get();
+
 		return c;
 	}
-
 
 	@Override
 	public int UpdateComplaint(Complaint complaint) {
@@ -78,16 +76,11 @@ Complaint c = complaintRepository.findById(id).get();
 	@Override
 	@Transactional
 	public void assignReclamationToEntreprise(int com, int entrepid) {
-		
-		Entreprise entrp=entrepriseRepository.getById(entrepid);
-		Complaint comp=complaintRepository.getById(com);
-		comp.setEntreprise(entrp);
-					
-	}
 
-	
-	
-	
-		
+		Entreprise entrp = entrepriseRepository.getById(entrepid);
+		Complaint comp = complaintRepository.getById(com);
+		comp.setEntreprise(entrp);
+
+	}
 
 }

@@ -19,12 +19,19 @@ import tn.esprit.repositories.EntrepriseRepository;
 
 @Service
 public class DomainServiceImp implements IDomainService {
-	@Autowired
-	DomainRepository domainRepository;
-	@Autowired
-	EmployeeRepository empRepo;
-	@Autowired
-	EntrepriseRepository entrepo;
+
+	private final DomainRepository domainRepository;
+
+	private final EmployeeRepository empRepo;
+
+	private final EntrepriseRepository entrepo;
+
+	public DomainServiceImp(DomainRepository domainRepository, EmployeeRepository empRepo,
+			EntrepriseRepository entrepo) {
+		this.domainRepository = domainRepository;
+		this.empRepo = empRepo;
+		this.entrepo = entrepo;
+	}
 
 	@Override
 	public Domain AddDomain(@RequestBody Domain d) {
@@ -34,7 +41,7 @@ public class DomainServiceImp implements IDomainService {
 	}
 
 	@Override
-	public Domain UpdateDomain(Domain d,int id) {
+	public Domain UpdateDomain(Domain d, int id) {
 		domainRepository.save(d);
 
 		return d;
@@ -42,59 +49,50 @@ public class DomainServiceImp implements IDomainService {
 
 	@Override
 	public Domain DeleteDomain(int id) {
-		Domain d=domainRepository.findById(id).get();
-		 domainRepository.delete(d);
+		Domain d = domainRepository.findById(id).get();
+		domainRepository.delete(d);
 		return d;
 	}
 
 	@Override
 	public List<Domain> GetAllDomains() {
-		
+
 		return domainRepository.findAll();
 	}
 
 	@Override
 	public void affecterDomainEntrePrise(Domain newdomain, int idEntre) {
-		
-		
-		Entreprise e=entrepo.getById(idEntre);
-		Set<Entreprise> se=new HashSet<Entreprise>();
-		Set<Domain> sd=new HashSet<Domain>();
-		Domain domain=domainRepository.findBynameDomain(newdomain.getNameDomain());
-		if(domain==null) {
+
+		Entreprise e = entrepo.getById(idEntre);
+		Set<Entreprise> se = new HashSet<Entreprise>();
+		Set<Domain> sd = new HashSet<Domain>();
+		Domain domain = domainRepository.findBynameDomain(newdomain.getNameDomain());
+		if (domain == null) {
 			se.add(e);
 			sd.add(newdomain);
-			
-		
-			if(e.getDomains().size()==0) {
+
+			if (e.getDomains().size() == 0) {
 				newdomain.setEntreprises(se);
 				domainRepository.save(newdomain);
-			}
-			else
-				if(e.getDomains().size()!=0)
-			{
-					e.getDomains().add(newdomain);
+			} else if (e.getDomains().size() != 0) {
+				e.getDomains().add(newdomain);
 				domainRepository.save(newdomain);
 				entrepo.save(e);
 			}
-			
-		}
-		else {
-			
+
+		} else {
+
 			e.getDomains().add(domain);
 
 			entrepo.save(e);
-			
+
 		}
-		}
-		
-	
+	}
 
 	@Override
 	public Set<Domain> GetAllDomainsparent(int ident) {
 		Entreprise e = entrepo.findById(ident).get();
 		return e.getDomains();
-
 
 	}
 

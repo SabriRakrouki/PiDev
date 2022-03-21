@@ -16,34 +16,40 @@ import tn.esprit.entities.Program;
 import tn.esprit.services.IProgramSerivce;
 
 @RestController
-@RequestMapping("/program")
+@RequestMapping("/api/v1/program")
 public class ProgramController {
 
-	protected IProgramSerivce iProgramSerivce;
-	
-	@GetMapping( value = "/getAll",consumes = "application/json")
+	private final IProgramSerivce iProgramSerivce;
+
+	public ProgramController(IProgramSerivce iProgramSerivce) {
+		this.iProgramSerivce = iProgramSerivce;
+	}
+
+	@GetMapping(value = "/getAll", consumes = "application/json")
 	@ResponseBody
-	public ResponseEntity<List<Program>> getAll(){
+	public ResponseEntity<List<Program>> getAll() {
 		return ResponseEntity.ok(iProgramSerivce.getAllProgram());
 	}
+
 	@PostMapping("/addProgram")
 	@ResponseBody
-	public ResponseEntity<String> CreateProgram(@RequestBody Program program){
+	public ResponseEntity<String> CreateProgram(@RequestBody Program program) {
 		iProgramSerivce.AddProgram(program);
 		return ResponseEntity.status(201).body("Program created");
 	}
-	
+
 	@PutMapping("/updateProgram")
 	@ResponseBody
-	public ResponseEntity<String> updateProgram(@RequestBody Program program){
-		iProgramSerivce.UpdateProgram( program);
+	public ResponseEntity<String> updateProgram(@RequestBody Program program) {
+		iProgramSerivce.UpdateProgram(program);
 		return ResponseEntity.ok("Program updated");
 	}
+
 	@DeleteMapping("/deleteProgram")
 	@ResponseBody
-	public ResponseEntity<String> deleteProgram(@RequestBody Program program){
-		iProgramSerivce.DeleteProgram( program);
+	public ResponseEntity<String> deleteProgram(@RequestBody Program program) {
+		iProgramSerivce.DeleteProgram(program);
 		return ResponseEntity.ok("Program Deleted");
 	}
-	
+
 }

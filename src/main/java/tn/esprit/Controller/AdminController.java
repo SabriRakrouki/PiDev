@@ -31,56 +31,68 @@ import tn.esprit.repositories.RoleRepository;
 import tn.esprit.repositories.UserRepository;
 import tn.esprit.services.IAdminService;
 import tn.esprit.services.IuserService;
+
 @RestController
-
+@RequestMapping("/api/v1/admin")
 public class AdminController {
-	@Autowired
-    private IAdminService adminService;
-	  @Autowired
-	  UserRepository userRepository;
-	  @Autowired
-	  RoleRepository roleRepository;
-	  @Autowired
-	  PasswordEncoder encoder;
-	  @Autowired
-	  IuserService staticService;
-	//http://localhost:8090/travelup/back/add-admin
-	 @PostMapping("/add-admin")
-	  public ResponseEntity<?> registerUser(@Valid @RequestBody Admin admin) {
-	    if (userRepository.existsByUsername(admin.getUsername())) {
-	      return ResponseEntity
-	          .badRequest()
-	          .body(new MessageResponse("Error: Username is already taken!"));
-	    }
 
-	    if (userRepository.existsByEmail(admin.getEmail())) {
-	      return ResponseEntity
-	          .badRequest()
-	          .body(new MessageResponse("Error: Email is already in use!"));
-	    }
-	    adminService.addAdmin(admin);
-	    return ResponseEntity.ok(new MessageResponse("Admin registered successfully!"));
-	  }
-	//http://localhost:8090/travelup/back/retrieveAdmins	 
+	private final IAdminService adminService;
+
+	private final UserRepository userRepository;
+
+	private final RoleRepository roleRepository;
+
+	private final PasswordEncoder encoder;
+
+	private final IuserService staticService;
+
+	public AdminController(IAdminService adminService, UserRepository userRepository, RoleRepository roleRepository,
+			PasswordEncoder encoder, IuserService staticService) {
+		super();
+		this.adminService = adminService;
+		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
+		this.encoder = encoder;
+		this.staticService = staticService;
+	}
+
+	// http://localhost:8090/travelup/back/add-admin
+	@PostMapping("/add-admin")
+	public ResponseEntity<?> registerUser(@Valid @RequestBody Admin admin) {
+		if (userRepository.existsByUsername(admin.getUsername())) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+		}
+
+		if (userRepository.existsByEmail(admin.getEmail())) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+		}
+		adminService.addAdmin(admin);
+		return ResponseEntity.ok(new MessageResponse("Admin registered successfully!"));
+	}
+
+	// http://localhost:8090/travelup/back/retrieveAdmins
 	@GetMapping("/admin/retrieveAdmins")
 	@ResponseBody
-	public List<Admin>retrieveAllAdmin() {
-	return adminService.retrieveAllAdmin();
+	public List<Admin> retrieveAllAdmin() {
+		return adminService.retrieveAllAdmin();
 	}
-	//http://localhost:8090/travelup/back/remove-admin/3
-		@DeleteMapping("/remove-admin/{admin-id}")
-		@ResponseBody
-		public void removeAdmin(@PathVariable("admin-id") int adminId) {
-			adminService.deleteAdmin(adminId);
-		}
-		//http://localhost:8090/travelup/back/updateAdmin/3
-		@PutMapping("/updateAdmin/{id}")
-		@ResponseBody
-		public Admin updateAdmin(@RequestBody Admin admin) {
-			return adminService.updateAdmin(admin);
-		}
-		@PostMapping("/static")
-		public StaticOfUser staticOfUser() throws ParseException{
-			return staticService.addUserStatic();
-		}
+
+	// http://localhost:8090/travelup/back/remove-admin/3
+	@DeleteMapping("/remove-admin/{admin-id}")
+	@ResponseBody
+	public void removeAdmin(@PathVariable("admin-id") int adminId) {
+		adminService.deleteAdmin(adminId);
+	}
+
+	// http://localhost:8090/travelup/back/updateAdmin/3
+	@PutMapping("/updateAdmin/{id}")
+	@ResponseBody
+	public Admin updateAdmin(@RequestBody Admin admin) {
+		return adminService.updateAdmin(admin);
+	}
+
+	@PostMapping("/static")
+	public StaticOfUser staticOfUser() throws ParseException {
+		return staticService.addUserStatic();
+	}
 }

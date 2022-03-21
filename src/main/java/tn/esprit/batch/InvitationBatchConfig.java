@@ -28,9 +28,15 @@ import tn.esprit.repositories.UserRepository;
 
 @Service
 public class InvitationBatchConfig {
-	@Autowired
+
 	InvitationRepository invitationRepository;
-	@Autowired
+
 	UserRepository userRepository;
-	 
+
+	public InvitationBatchConfig(InvitationRepository invitationRepository, UserRepository userRepository) {
+		super();
+		this.invitationRepository = invitationRepository;
+		this.userRepository = userRepository;
+	}
+
 }

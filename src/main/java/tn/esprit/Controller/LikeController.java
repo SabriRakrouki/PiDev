@@ -39,29 +39,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @RestController
-@RequestMapping("/like")
+@RequestMapping("/api/v1/like")
 public class LikeController {
 
-	@Autowired
-	LikesService likeService;
+	private final LikesService likeService;
 
-	@Autowired
-	PostRepository postRepo;
-	@Autowired
-	UserRepository userrepository;
+	private final PostRepository postRepo;
+
+	private final UserRepository userrepository;
+
+	public LikeController(LikesService likeService, PostRepository postRepo, UserRepository userrepository) {
+		this.likeService = likeService;
+		this.postRepo = postRepo;
+		this.userrepository = userrepository;
+	}
 
 	@PostMapping("/addLike/{idPost}")
-	
+
 	public Like AddLike(@PathParam("idPost") Integer idpost) {
 		Like like = new Like();
 		String username;
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof UserDetails) {
-			username = ((UserDetails)principal).getUsername();
-			} else {
-			 username = principal.toString();
-			}
-		User us= userrepository.findByUsername(username).get();
+			username = ((UserDetails) principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+		User us = userrepository.findByUsername(username).get();
 		Post post = postRepo.findById(idpost).get();
 		like.setUser(us);
 		like.setPost(post);

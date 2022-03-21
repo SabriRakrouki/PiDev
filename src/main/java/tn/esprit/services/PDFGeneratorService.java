@@ -29,7 +29,7 @@ import tn.esprit.entities.Complaint;
 public class PDFGeneratorService{
 	
 	
-	private List<Complaint> listComplaints;
+	private final List<Complaint> listComplaints;
 	
 	
 	

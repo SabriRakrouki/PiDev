@@ -21,16 +21,26 @@ import tn.esprit.repositories.RoleRepository;
 
 @Service
 public class EntrepriseServiceImpl implements IEntrepriseService {
-	@Autowired
-	EntrepriseRepository entrepriseRepository;
-	@Autowired
-	RoleRepository roleRepository;
-	@Autowired
-	EmployeeRepository employeeRepository;
-	@Autowired
-	ComplaintRepository complaintRepository;
 
-	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	private final EntrepriseRepository entrepriseRepository;
+
+	private final RoleRepository roleRepository;
+
+	private final EmployeeRepository employeeRepository;
+
+	private final ComplaintRepository complaintRepository;
+
+	private final PasswordEncoder passwordEncoder;
+
+	public EntrepriseServiceImpl(EntrepriseRepository entrepriseRepository, RoleRepository roleRepository,
+			EmployeeRepository employeeRepository, ComplaintRepository complaintRepository) {
+		super();
+		this.entrepriseRepository = entrepriseRepository;
+		this.roleRepository = roleRepository;
+		this.employeeRepository = employeeRepository;
+		this.complaintRepository = complaintRepository;
+		this.passwordEncoder = new BCryptPasswordEncoder();
+	}
 
 	@Override
 	public void addEntreprise(Entreprise entreprise) {

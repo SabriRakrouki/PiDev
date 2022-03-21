@@ -32,15 +32,19 @@ import tn.esprit.entities.ChargeRequest.Currency;
 import tn.esprit.services.StripeService;
 
 @RestController
-@RequestMapping("/payment")
+@RequestMapping("/api/v1/payment")
 public class PaymentController {
 
-	@Autowired
-	private StripeService paymentsService;
+	private final StripeService paymentsService;
+
+	public PaymentController(StripeService paymentsService) {
+		super();
+		this.paymentsService = paymentsService;
+	}
 
 	@PostMapping("/charge")
 	@ResponseBody
-	public String charge( @RequestBody ChargeRequest chargeRequest) throws StripeException {
+	public String charge(@RequestBody ChargeRequest chargeRequest) throws StripeException {
 
 		return paymentsService.charge(chargeRequest).toString();
 

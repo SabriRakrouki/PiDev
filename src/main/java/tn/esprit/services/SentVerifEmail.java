@@ -10,43 +10,38 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SentVerifEmail {
-           @Autowired
-        private JavaMailSender emailSender;
 
-        public String sendHtmlEmail(long code,String email) throws MessagingException {
+	private final JavaMailSender emailSender;
 
-            MimeMessage message = emailSender.createMimeMessage();
+	public SentVerifEmail(JavaMailSender emailSender) {
+		this.emailSender = emailSender;
+	}
 
-            boolean multipart = true;
+	public String sendHtmlEmail(long code, String email) throws MessagingException {
 
-            MimeMessageHelper helper = new MimeMessageHelper(message, multipart, "utf-8");
+		MimeMessage message = emailSender.createMimeMessage();
 
+		boolean multipart = true;
 
+		MimeMessageHelper helper = new MimeMessageHelper(message, multipart, "utf-8");
 
+		String htmlMsg = "\r\n" + "<html>\n" + "                      <body> \n"
+				+ "                         <div align='center'>\n"
+				+ "                            <div style='text-align:center;'>\n"
+				+ "                          Email Verification Code:    \n" + "                        " + code
+				+ "                        \n " + "                           </div>\n" + "   \n"
+				+ "                            <br/><br/>\n"
+				+ "                              Please verify your email address using the code above to complete the account setup. \n"
+				+ "                      </body>\n" + "                   </html>\n";
 
-            String htmlMsg="\r\n" + 
-                    "<html>\n" + 
-                    "                      <body> \n" + 
-                    "                         <div align='center'>\n" + 
-                    "                            <div style='text-align:center;'>\n" + 
-                    "                          Email Verification Code:    \n" + 
-                    "                        "+code+"                        \n "+
-                    "                           </div>\n" + 
-                    "   \n" + 
-                    "                            <br/><br/>\n" + 
-                    "                              Please verify your email address using the code above to complete the account setup. \n" +
-                    "                      </body>\n" + 
-                    "                   </html>\n";
+		message.setContent(htmlMsg, "text/html");
 
-            message.setContent(htmlMsg, "text/html");
+		helper.setTo(email);
 
-            helper.setTo(email);
+		helper.setSubject("Email Verification");
 
-            helper.setSubject("Email Verification");
+		this.emailSender.send(message);
 
-
-            this.emailSender.send(message);
-
-            return "Email Sent!";
-        }
+		return "Email Sent!";
+	}
 }

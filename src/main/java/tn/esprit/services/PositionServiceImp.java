@@ -21,12 +21,19 @@ import tn.esprit.repositories.UserRepository;
 
 @Service
 public class PositionServiceImp implements IPositionService {
-	@Autowired
-	PositionRepository positionRepository;
-	@Autowired
-	EmployeeRepository empRepo;
-	@Autowired
-	UserRepository userRepo;
+
+	private final PositionRepository positionRepository;
+
+	private final EmployeeRepository empRepo;
+
+	private final UserRepository userRepo;
+
+	public PositionServiceImp(PositionRepository positionRepository, EmployeeRepository empRepo,
+			UserRepository userRepo) {
+		this.positionRepository = positionRepository;
+		this.empRepo = empRepo;
+		this.userRepo = userRepo;
+	}
 
 	@Override
 	public Position AddPosition(Position d) {

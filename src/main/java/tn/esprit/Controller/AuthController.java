@@ -43,44 +43,40 @@ import tn.esprit.security.UserLoginFailureHandler;
 import tn.esprit.security.UserLoginSuccessHandler;
 import tn.esprit.services.UserService;
 
-
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
-  @Autowired
-  AuthenticationManager authenticationManager;
+	private final AuthenticationManager authenticationManager;
+	private final UserRepository userRepository;
+	private final UserService userService;
+	private final RoleRepository roleRepository;
+	private final PasswordEncoder encoder;
+	private final JwtUtils jwtUtils;
 
-  @Autowired
-  UserRepository userRepository;
-  @Autowired
-  UserService   userService;
+	public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
+			UserService userService, RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
+		this.authenticationManager = authenticationManager;
+		this.userRepository = userRepository;
+		this.userService = userService;
+		this.roleRepository = roleRepository;
+		this.encoder = encoder;
+		this.jwtUtils = jwtUtils;
+	}
 
-  @Autowired
-  RoleRepository roleRepository;
+	@PostMapping("/signin")
+	public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest)
+			throws IOException, ServletException {
 
-  @Autowired
-  PasswordEncoder encoder;
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = jwtUtils.generateJwtToken(authentication);
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
+				.collect(Collectors.toList());
+		return ResponseEntity.ok(
+				new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+	}
 
-  @Autowired
-  JwtUtils jwtUtils;
-  @PostMapping("/signin")
-  public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws IOException, ServletException {
-	
-    Authentication authentication = authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-    String jwt = jwtUtils.generateJwtToken(authentication);
-    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();  
-    List<String> roles = userDetails.getAuthorities().stream()
-            .map(item -> item.getAuthority())
-            .collect(Collectors.toList());
-         return ResponseEntity.ok(new JwtResponse(jwt, 
-                             userDetails.getId(), 
-                             userDetails.getUsername(), 
-                             userDetails.getEmail(), 
-                           roles));       
-  }
- 
-	 
 }

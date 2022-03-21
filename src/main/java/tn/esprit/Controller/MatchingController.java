@@ -23,12 +23,20 @@ import tn.esprit.services.MatchingAlgoImp;
 @RestController
 @RequestMapping("/Matching")
 public class MatchingController {
-	@Autowired
-	MatchAlgorithm matchingAlgoImp;
-	@Autowired
-	EmployeeRepository employeeRepository;
-	@Autowired
-	TripRepository tripRepository;
+
+	private final MatchAlgorithm matchingAlgoImp;
+
+	private final EmployeeRepository employeeRepository;
+
+	private final TripRepository tripRepository;
+
+	public MatchingController(MatchAlgorithm matchingAlgoImp, EmployeeRepository employeeRepository,
+			TripRepository tripRepository) {
+		super();
+		this.matchingAlgoImp = matchingAlgoImp;
+		this.employeeRepository = employeeRepository;
+		this.tripRepository = tripRepository;
+	}
 
 	@GetMapping("/{idtrip}/{emp}")
 	@ResponseBody

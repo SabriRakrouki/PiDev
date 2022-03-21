@@ -11,13 +11,18 @@ import tn.esprit.entities.Location;
 import tn.esprit.repositories.LocationRepository;
 
 @RestController
-@RequestMapping("/location")
+@RequestMapping("/api/v1/location")
 public class LocationController {
 	
-	@Autowired
-	LocationRepository locationRepository;
+	
+	private final LocationRepository locationRepository;
 	
 	
+	public LocationController(LocationRepository locationRepository) {
+		this.locationRepository = locationRepository;
+	}
+
+
 	@PostMapping("/add")
 	@ResponseBody
 	public Location addLocation(@RequestBody Location location) {

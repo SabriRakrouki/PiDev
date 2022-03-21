@@ -11,8 +11,8 @@ import tn.esprit.repositories.ProgramRepository;
 
 @Service
 public class ProgramServiceImp implements IProgramSerivce {
-	@Autowired
-	protected ProgramRepository programRepository;
+	
+	private final  ProgramRepository programRepository;
 
 	public ProgramServiceImp(ProgramRepository programRepository) {
 		// TODO Auto-generated constructor stub

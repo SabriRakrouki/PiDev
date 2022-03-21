@@ -17,18 +17,27 @@ import tn.esprit.repositories.*;
 @Service
 public class LikeServiceImp implements LikesService {
 
-	@Autowired
-	PostRepository postRepository;
-	@Autowired
-	AdminRepository userRepository;
-	@Autowired
-	NotificationRepository notificationRepository;
-	@Autowired
-	LikesRepository likesRepository;
+	
+	private final PostRepository postRepository;
+	
+	private final AdminRepository userRepository;
+	
+	private final NotificationRepository notificationRepository;
+	
+	private final LikesRepository likesRepository;
 
 
 
-    @Override
+    public LikeServiceImp(PostRepository postRepository, AdminRepository userRepository,
+			NotificationRepository notificationRepository, LikesRepository likesRepository) {
+		this.postRepository = postRepository;
+		this.userRepository = userRepository;
+		this.notificationRepository = notificationRepository;
+		this.likesRepository = likesRepository;
+	}
+
+
+	@Override
     public Like AddLike(Post post,User user) {
     	Like like = new Like();
     	like.setPost(post);

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,10 +23,16 @@ import tn.esprit.services.EntrepriseServiceImpl;
 import tn.esprit.services.IEntrepriseService;
 
 @RestController
+@RequestMapping("/api/v1/entreprise")
 public class EntrepriseController {
 
-	@Autowired
-	private IEntrepriseService entrepriseService;
+
+	private final  IEntrepriseService entrepriseService;
+
+	public EntrepriseController(IEntrepriseService entrepriseService) {
+		super();
+		this.entrepriseService = entrepriseService;
+	}
 
 	// http://localhost:8090/travelup/back/add-entreprise
 	@PostMapping("/signup/entreprise")

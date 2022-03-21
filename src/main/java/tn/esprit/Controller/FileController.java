@@ -25,9 +25,11 @@ import tn.esprit.spring.message.ResponseFile;
 import tn.esprit.spring.message.ResponseMessage;
 
 @RestController
-@RequestMapping("/file")
+@RequestMapping("/api/v1/file")
 public class FileController {
 
+	
+	
 	@Value("${file.upload-dir}")
 	String FILE_DIRECTORY;
 

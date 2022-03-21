@@ -59,33 +59,42 @@ import tn.esprit.services.LocationService;
 import tn.esprit.services.PDFGeneratorService;
 
 @RestController
-@RequestMapping("/trip")
+@RequestMapping("/api/v1/trip")
 
 public class TripController {
-	@Autowired
-	protected ITripService iTripService;
-	@Autowired
-	LocationService locationService;
-	@Autowired
-	EmployeeRepository employeeRepository;
-	@Autowired
-	EntrepriseRepository userRepository;
-	private JavaMailSender mailSender;
+
+	private final ITripService iTripService;
+
+	private final LocationService locationService;
+
+	private final EmployeeRepository employeeRepository;
+
+	private final EntrepriseRepository userRepository;
+	private final JavaMailSender mailSender;
+
+	public TripController(ITripService iTripService, LocationService locationService,
+			EmployeeRepository employeeRepository, EntrepriseRepository userRepository, JavaMailSender mailSender) {
+		this.iTripService = iTripService;
+		this.locationService = locationService;
+		this.employeeRepository = employeeRepository;
+		this.userRepository = userRepository;
+		this.mailSender = mailSender;
+	}
 
 	@PostMapping("/addTrip")
 
 	@ResponseBody
 	public ResponseEntity<String> addTrip(@RequestBody Trip trip) {
 		String username;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-            } else {
-             username = principal.toString();
-            }
-        Entreprise us= userRepository.findByUsername(username).orElse(null);
-        
-        trip.setEntreprise( us);
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails) principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+		Entreprise us = userRepository.findByUsername(username).orElse(null);
+
+		trip.setEntreprise(us);
 		iTripService.AddTrip(trip);
 		return ResponseEntity.ok("Trip created");
 
@@ -121,13 +130,12 @@ public class TripController {
 
 		return iTripService.AddUserToTrip(iduser, idtrip);
 	}
-	
+
 	@PostMapping("/addLocation/{idLoc}/{idTrip}")
 	@ResponseBody
-	public Location addLocationToTrip(@PathVariable("idLoc")int loc,@PathVariable("idTrip") int tip) {
+	public Location addLocationToTrip(@PathVariable("idLoc") int loc, @PathVariable("idTrip") int tip) {
 		return locationService.addLocationToTrip(loc, tip);
 	}
-	
 
 	@GetMapping("/countries")
 	@ResponseBody

@@ -1,7 +1,5 @@
 package tn.esprit.services;
 
-
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,10 +20,15 @@ import tn.esprit.repositories.UserStaticRepository;
 @Transactional
 @Slf4j
 public class UserService implements IuserService {
-	@Autowired
-	UserRepository userRepository;
-	@Autowired
-	UserStaticRepository userstaticRepo;
+
+	private final UserRepository userRepository;
+
+	private final UserStaticRepository userstaticRepo;
+
+	public UserService(UserRepository userRepository, UserStaticRepository userstaticRepo) {
+		this.userRepository = userRepository;
+		this.userstaticRepo = userstaticRepo;
+	}
 
 	@Override
 	public Date weekDate(Date date) {
@@ -40,29 +43,25 @@ public class UserService implements IuserService {
 	@Override
 	public int userAddinWeek() throws ParseException {
 		// TODO Auto-generated method stub
-		Date date=new Date();
+		Date date = new Date();
 		SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String dateNow=date.toString();
-		String dateWeek=weekDate(date).toString();
-	//	log.info(userRepository.UserStatistic(DateFor.parse(dateNow), DateFor.parse(dateWeek) ));
-		
-		
-		
-		
-		
-		return userRepository.UserStatistic(date, weekDate(date) );
+		String dateNow = date.toString();
+		String dateWeek = weekDate(date).toString();
+		// log.info(userRepository.UserStatistic(DateFor.parse(dateNow),
+		// DateFor.parse(dateWeek) ));
+
+		return userRepository.UserStatistic(date, weekDate(date));
 	}
-	
 
 	@Override
 	public StaticOfUser addUserStatic() throws ParseException {
 		// TODO Auto-generated method stub
-		StaticOfUser ofUser=new StaticOfUser();
+		StaticOfUser ofUser = new StaticOfUser();
 		Date datetoday = new Date();
 		ofUser.setDayofweekLater(weekDate(datetoday));
 		ofUser.setDateDay(datetoday);
 		ofUser.setNumberOfuser(userAddinWeek());
-		//userstaticRepo.save(ofUser);
+		// userstaticRepo.save(ofUser);
 
 		return ofUser;
 	}

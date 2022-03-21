@@ -19,9 +19,6 @@ import tn.esprit.repositories.EmployeeRepository;
 import tn.esprit.repositories.LocationRepository;
 import tn.esprit.repositories.TripRepository;
 
-
-
-
 @Service
 @Slf4j
 
@@ -29,17 +26,21 @@ public class LocationServiceImp implements LocationService {
 
 	@Value("${APIKEY}")
 	private String secretKey;
-	List<Location> locations;
-	@Autowired
-	LocationRepository locationRepository;
-	@Autowired
-	EmployeeRepository employeeRepository;
-	@Autowired
-	TripRepository tripRepository;
+	private final List<Location> locations;
 
-	public LocationServiceImp(List<Location> locations) {
-		// TODO Auto-generated constructor stub
+	private final LocationRepository locationRepository;
+
+	private final EmployeeRepository employeeRepository;
+
+	private final TripRepository tripRepository;
+
+	public LocationServiceImp( List<Location> locations, LocationRepository locationRepository,
+			EmployeeRepository employeeRepository, TripRepository tripRepository) {
+
 		this.locations = locations;
+		this.locationRepository = locationRepository;
+		this.employeeRepository = employeeRepository;
+		this.tripRepository = tripRepository;
 	}
 
 	@Override
@@ -51,8 +52,7 @@ public class LocationServiceImp implements LocationService {
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		// optional default is GET
 		con.setRequestMethod("GET");
-		con.addRequestProperty("User-Agent", 
-				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+		con.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 		// add request header
 		con.setRequestProperty("X-CSCAPI-KEY", secretKey);
 		int responseCode = con.getResponseCode();
@@ -101,8 +101,7 @@ public class LocationServiceImp implements LocationService {
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		// optional default is GET
 		con.setRequestMethod("GET");
-		con.addRequestProperty("User-Agent", 
-				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+		con.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 		// add request header
 		con.setRequestProperty("X-CSCAPI-KEY", secretKey);
 		int responseCode = con.getResponseCode();
@@ -148,8 +147,7 @@ public class LocationServiceImp implements LocationService {
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		// optional default is GET
 		con.setRequestMethod("GET");
-		con.addRequestProperty("User-Agent", 
-				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+		con.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 		// add request header
 		con.setRequestProperty("X-CSCAPI-KEY", secretKey);
 		int responseCode = con.getResponseCode();
@@ -187,8 +185,7 @@ public class LocationServiceImp implements LocationService {
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		// optional default is GET
 		con.setRequestMethod("GET");
-		con.addRequestProperty("User-Agent", 
-				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+		con.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 		// add request header
 		con.setRequestProperty("X-CSCAPI-KEY", secretKey);
 		int responseCode = con.getResponseCode();
@@ -233,13 +230,12 @@ public class LocationServiceImp implements LocationService {
 	public List<Location> GetcitiesbyStateAndCountry(String Ctag, String Stag) throws Exception {
 		// TODO Auto-generated method stub
 		locations.removeAll(locations);
-		String url = "https://api.countrystatecity.in/v1/countries/" + Ctag +"/states/"+Stag +"/cities";
+		String url = "https://api.countrystatecity.in/v1/countries/" + Ctag + "/states/" + Stag + "/cities";
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		// optional default is GET
 		con.setRequestMethod("GET");
-		con.addRequestProperty("User-Agent", 
-				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+		con.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 		// add request header
 		con.setRequestProperty("X-CSCAPI-KEY", secretKey);
 		int responseCode = con.getResponseCode();
@@ -276,7 +272,7 @@ public class LocationServiceImp implements LocationService {
 		}
 
 		return locations;
-		
+
 	}
 
 	@Override
@@ -306,9 +302,9 @@ public class LocationServiceImp implements LocationService {
 	@Override
 	public Location addLocationToTrip(int location, int trip) {
 		// TODO Auto-generated method stub
-		Location loc=locationRepository.findById(location).get();
-		
-		Trip trips=tripRepository.findById(trip).get();
+		Location loc = locationRepository.findById(location).get();
+
+		Trip trips = tripRepository.findById(trip).get();
 		trips.setTripLocation(loc);
 		tripRepository.save(trips);
 		return loc;
@@ -317,8 +313,8 @@ public class LocationServiceImp implements LocationService {
 	@Override
 	public Location addLocationToEmployee(int location, int employee) {
 		// TODO Auto-generated method stub
-		Employee emp= employeeRepository.findById(employee).get();
-		Location loc=locationRepository.findById(location).get();
+		Employee emp = employeeRepository.findById(employee).get();
+		Location loc = locationRepository.findById(location).get();
 		emp.setBornePlace(loc);
 		employeeRepository.save(emp);
 		return loc;

@@ -22,16 +22,27 @@ import tn.esprit.repositories.InvitationRepository;
 import tn.esprit.repositories.RoleRepository;
 
 @Service
-public class EmployeeServiceImpl implements IEmployeeService{
-	@Autowired
-	EmployeeRepository employeeRepository ;
-	@Autowired
-	EntrepriseRepository entrepriseRepository ;
-	@Autowired
-	InvitationRepository invitationRepository ;
-	@Autowired
-	RoleRepository roleRepository ;
-	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+public class EmployeeServiceImpl implements IEmployeeService {
+
+	private final EmployeeRepository employeeRepository;
+
+	private final EntrepriseRepository entrepriseRepository;
+
+	private final InvitationRepository invitationRepository;
+
+	private final RoleRepository roleRepository;
+	
+	private final PasswordEncoder passwordEncoder;
+
+	public EmployeeServiceImpl(EmployeeRepository employeeRepository, EntrepriseRepository entrepriseRepository,
+			InvitationRepository invitationRepository, RoleRepository roleRepository) {
+		this.employeeRepository = employeeRepository;
+		this.entrepriseRepository = entrepriseRepository;
+		this.invitationRepository = invitationRepository;
+		this.roleRepository = roleRepository;
+		this.passwordEncoder = new BCryptPasswordEncoder();
+	}
+
 	@Override
 	public void addEmployee(Employee employee) {
 		Role userRole = roleRepository.getByName(ERole.ROLE_EMPLOYEE);
@@ -50,7 +61,7 @@ public class EmployeeServiceImpl implements IEmployeeService{
 	@Override
 	public List<Employee> retrieveAllEmployee() {
 		List<Employee> Employees = employeeRepository.findAll();
-		return Employees ;
+		return Employees;
 	}
 
 	@Override
@@ -61,7 +72,7 @@ public class EmployeeServiceImpl implements IEmployeeService{
 	@Override
 	public Employee updateEmployee(Employee employee) {
 		employee.setPassword(passwordEncoder.encode(employee.getPassword()));
-		return employeeRepository.save(employee); 
+		return employeeRepository.save(employee);
 	}
 
 }

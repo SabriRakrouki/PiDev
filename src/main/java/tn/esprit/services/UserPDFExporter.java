@@ -13,7 +13,7 @@ import tn.esprit.entities.Employee;
  
  
 public class UserPDFExporter {
-    private List<Employee> listUsers;
+    private final  List<Employee> listUsers;
      
     public UserPDFExporter(List<Employee> listUsers) {
         this.listUsers = listUsers;

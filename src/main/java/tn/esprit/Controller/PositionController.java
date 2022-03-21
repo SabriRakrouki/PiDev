@@ -17,53 +17,54 @@ import tn.esprit.entities.Position;
 import tn.esprit.services.IPositionService;
 
 @RestController
-@RequestMapping("/Position")
+@RequestMapping("/api/v1/position")
 public class PositionController {
-	
-	@Autowired
-	IPositionService PositionService;
-	
+
+	private final IPositionService PositionService;
+
+	public PositionController(IPositionService positionService) {
+
+		PositionService = positionService;
+	}
+
 	@PostMapping("/addPosition")
 	@ResponseBody
 	public Position addPosition(@RequestBody Position p) {
-		
-			return PositionService.AddPosition(p);
-		
+
+		return PositionService.AddPosition(p);
+
 	}
-	
+
 	@PutMapping("/updatePosition")
 	@ResponseBody
-	public Position updatePosition( @RequestBody Position d) {
-		
-			return PositionService.UpdatePosition(d);
-		
-		
+	public Position updatePosition(@RequestBody Position d) {
+
+		return PositionService.UpdatePosition(d);
+
 	}
-	
+
 	@DeleteMapping("/deletPosition/{id}")
 	@ResponseBody
-	public Position deletPosition( @PathVariable("id")  int id) {
-		
-			return PositionService.DeletePosition(id);
-		
+	public Position deletPosition(@PathVariable("id") int id) {
+
+		return PositionService.DeletePosition(id);
+
 	}
-	
+
 	@RequestMapping("/getallPosition")
 	@ResponseBody
-	public List<Position> getallPosition( ) {
-		
-			return PositionService.GetAllPosition();
-		
+	public List<Position> getallPosition() {
+
+		return PositionService.GetAllPosition();
+
 	}
-	
+
 	@PutMapping("/afftctPOs/{idempl}")
 	@ResponseBody
-	public void afftctPOs( @RequestBody Position p,@PathVariable("idempl")int idempl) {
-		
+	public void afftctPOs(@RequestBody Position p, @PathVariable("idempl") int idempl) {
+
 		PositionService.affecterPositionEMPL(p, idempl);
-		
-		
+
 	}
-	
 
 }

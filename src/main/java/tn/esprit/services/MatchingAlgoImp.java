@@ -31,20 +31,23 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 	public static int CITYTRIPSCORE = 100;
 	public static int STATESCORE = 150;
 	public static int POSTIONSCORE = 50;
-	@Autowired
-	TripRepository tripRepository;
 
-	Set<Employee> userMatched;
-	List<Employee> employeesRes ;
-	TreeMap<Integer, Employee> mapuser;
+	private final TripRepository tripRepository;
+
+	private final Set<Employee> userMatched;
+	private final List<Employee> employeesRes;
+	private final TreeMap<Integer, Employee> mapuser;
 
 	int score;
 
-	public MatchingAlgoImp(TreeMap<Integer, Employee> mapuser, Set<Employee> userMatched) {
-		// TODO Auto-generated constructor stub
-		this.mapuser = mapuser;
-
+	public MatchingAlgoImp(TripRepository tripRepository, Set<Employee> userMatched, List<Employee> employeesRes,
+			TreeMap<Integer, Employee> mapuser) {
+		super();
+		this.tripRepository = tripRepository;
 		this.userMatched = userMatched;
+		this.employeesRes = employeesRes;
+		this.mapuser = mapuser;
+	
 	}
 
 	/*
@@ -123,10 +126,10 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 			}
 
 		}
-		if(entrepriseToMatch.getDomains().size()==0) {
+		if (entrepriseToMatch.getDomains().size() == 0) {
 			return true;
 		}
-		if(entreprise.getDomains().size()==0) {
+		if (entreprise.getDomains().size() == 0) {
 			return true;
 		}
 
@@ -154,68 +157,65 @@ public class MatchingAlgoImp implements MatchAlgorithm {
 	}
 
 	public List<Employee> getAllTheMatchingPeople(Employee user, Trip tripToMatch) {
-		List<Employee> employeesRes= new ArrayList<Employee>();
-		
-			Set<Trip> trips= this.findTripByDate(tripToMatch);
-				
-			log.info("here we got the trips"+trips.size());
-			
-			for (Trip trip : trips) {
-				log.info(trip.toString());
-				if (trip.getTripLocation().getCountry().equals(tripToMatch.getTripLocation().getCountry())) {
-					log.info("here we chetched location");
-					Set<Employee> usersToMatch = usersToMatch = trip.getEmployee();
-					log.info("here we get users"+trip.getEmployee().size());
-						
-					for (Employee emp : usersToMatch) {
-						log.info("test");
-						if (checkdomainEntreprise(user.getEntreprise(), emp.getEntreprise())) {
-							log.info("here we get checked domain");
-							score = 0;
-						/*	if (checkPostion(emp, user)) {
-								score = score + POSTIONSCORE;
-								log.info(emp.getCin());
-							}*/
-							if (ageGap(user.getAge(), emp.getAge())) {
-								score = score + AGESCORE;
-								log.info(emp.getFirstName());
+		List<Employee> employeesRes = new ArrayList<Employee>();
 
-							}
-							if (bornCheck(emp, user)) {
-								score = score + BORNSCORE;
-								log.info(emp.getEmail());
-							}
+		Set<Trip> trips = this.findTripByDate(tripToMatch);
 
-							if (checkStates(trip.getTripLocation().getState(),
-									tripToMatch.getTripLocation().getState())) {
-								log.info("state");
-								score = score + STATESCORE;
-								if (checkCity(trip.getTripLocation().getCity(),
-										tripToMatch.getTripLocation().getCity())) {
-									log.info("city");
-									score = score + CITYTRIPSCORE;
-								}
-							}
+		log.info("here we got the trips" + trips.size());
 
-							if (languageCheck(emp, user)) {
-								score = score + LANGUAGESCORE;
-								log.info("lang");
-							}
-							
-							log.info("user score :"+score+emp.getAge()+emp.getId());
-							employeesRes.add(emp);
-							mapuser.put(score+emp.getAge()+emp.getId(), user);
+		for (Trip trip : trips) {
+			log.info(trip.toString());
+			if (trip.getTripLocation().getCountry().equals(tripToMatch.getTripLocation().getCountry())) {
+				log.info("here we chetched location");
+				Set<Employee> usersToMatch = usersToMatch = trip.getEmployee();
+				log.info("here we get users" + trip.getEmployee().size());
+
+				for (Employee emp : usersToMatch) {
+					log.info("test");
+					if (checkdomainEntreprise(user.getEntreprise(), emp.getEntreprise())) {
+						log.info("here we get checked domain");
+						score = 0;
+						/*
+						 * if (checkPostion(emp, user)) { score = score + POSTIONSCORE;
+						 * log.info(emp.getCin()); }
+						 */
+						if (ageGap(user.getAge(), emp.getAge())) {
+							score = score + AGESCORE;
+							log.info(emp.getFirstName());
+
+						}
+						if (bornCheck(emp, user)) {
+							score = score + BORNSCORE;
+							log.info(emp.getEmail());
 						}
 
+						if (checkStates(trip.getTripLocation().getState(), tripToMatch.getTripLocation().getState())) {
+							log.info("state");
+							score = score + STATESCORE;
+							if (checkCity(trip.getTripLocation().getCity(), tripToMatch.getTripLocation().getCity())) {
+								log.info("city");
+								score = score + CITYTRIPSCORE;
+							}
+						}
+
+						if (languageCheck(emp, user)) {
+							score = score + LANGUAGESCORE;
+							log.info("lang");
+						}
+
+						log.info("user score :" + score + emp.getAge() + emp.getId());
+						employeesRes.add(emp);
+						mapuser.put(score + emp.getAge() + emp.getId(), user);
 					}
 
 				}
 
 			}
 
-			log.info("test"+employeesRes.size());
+		}
 
-		
+		log.info("test" + employeesRes.size());
+
 		return employeesRes;
 
 	}

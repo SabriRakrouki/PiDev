@@ -1,6 +1,5 @@
 package tn.esprit.Controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,54 +18,55 @@ import tn.esprit.services.ICommentService;
 import tn.esprit.services.ITopicService;
 
 @RestController
-@RequestMapping("/topic")
+@RequestMapping("/api/v1/topic")
 public class TopicController {
-	
-	@Autowired	
-	ITopicService topicService;
-	
+
+	private final ITopicService topicService;
+
+	public TopicController(ITopicService topicService) {
+		
+		this.topicService = topicService;
+	}
+
 	@GetMapping("/getTopics")
 	@ResponseBody
-	public List<Topic> getAllTopics(){
+	public List<Topic> getAllTopics() {
 		System.out.println(topicService.getAllTopics());
 		return topicService.getAllTopics();
-				
+
 	}
-	
+
 	@GetMapping("/getTopic/{topic-id}")
 	@ResponseBody
-	public Topic getCommentById(@PathVariable("topic-id") int topicId){
+	public Topic getCommentById(@PathVariable("topic-id") int topicId) {
 		return topicService.getTopicById(topicId);
-				
+
 	}
-	 @GetMapping("/count")
-	 public long countTopics() {
-	        return topicService.count();
-	
-	 }
-	
-    @PostMapping("/addTopic")
+
+	@GetMapping("/count")
+	public long countTopics() {
+		return topicService.count();
+
+	}
+
+	@PostMapping("/addTopic")
 	@ResponseBody
-	public Topic  AddTopic(@RequestBody Topic topic) {
-		return topicService.AddTopic(topic); 
-	   
+	public Topic AddTopic(@RequestBody Topic topic) {
+		return topicService.AddTopic(topic);
+
 	}
-	
 
 	@PutMapping("/updateTopic/{id}")
-	public void updateTopic(@RequestBody Topic topic,int id){
-		topicService.updateTopic(id,topic);
+	public void updateTopic(@RequestBody Topic topic, int id) {
+		topicService.updateTopic(id, topic);
 	}
-	
+
 	@DeleteMapping("/remove-topic/{comment-id}")
-    @ResponseBody
+	@ResponseBody
 	public void deleteTopic(@PathVariable("topic-id") int topicId) {
 
 		topicService.removeTopic(topicId);
 
 	}
-	
-	
+
 }
-
-
