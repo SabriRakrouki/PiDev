@@ -17,7 +17,7 @@ import tn.esprit.repositories.UserRepository;
 @Service
 public class RefreshTokenService {
 	@Value("${bezkoder.app.jwtRefreshExpirationMs}")
-	private  Long refreshTokenDurationMs;
+	private Long refreshTokenDurationMs;
 
 	private final RefreshTokenRepository refreshTokenRepository;
 
