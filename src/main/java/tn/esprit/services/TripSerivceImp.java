@@ -46,7 +46,7 @@ public class TripSerivceImp implements ITripService {
 	}
 
 	public Trip FindTripById(int id) {
-		return tripRepository.getById(id);
+		return tripRepository.findById(id).get();
 	}
 
 	public void NoterVoyage(Trip trip, Float attrib) {

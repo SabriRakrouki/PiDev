@@ -34,6 +34,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,7 +58,7 @@ import tn.esprit.repositories.EntrepriseRepository;
 import tn.esprit.services.ITripService;
 import tn.esprit.services.LocationService;
 import tn.esprit.services.PDFGeneratorService;
-
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/trip")
 
@@ -84,7 +85,7 @@ public class TripController {
 	@PostMapping("/addTrip")
 
 	@ResponseBody
-	public ResponseEntity<String> addTrip(@RequestBody Trip trip) {
+	public Trip addTrip( @RequestBody Trip trip) {
 		String username;
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof UserDetails) {
@@ -96,7 +97,7 @@ public class TripController {
 
 		trip.setEntreprise(us);
 		iTripService.AddTrip(trip);
-		return ResponseEntity.ok("Trip created");
+		return trip;
 
 	}
 
@@ -114,13 +115,17 @@ public class TripController {
 
 		return iTripService.getAllTrip();
 	}
+	@GetMapping("/gettrip/{idTrip}")
+	@ResponseBody
+	public Trip getTripByid(@PathVariable("idTrip") int idTrip ) {
+		return iTripService.FindTripById(idTrip);
+	}
 
 	@DeleteMapping("/deleteTrip/{idTrip}")
 	@ResponseBody
 
-	public ResponseEntity<String> DeleteTrip(@PathVariable("idTrip") int idTrip) {
+	public void DeleteTrip(@PathVariable("idTrip") int idTrip) {
 		iTripService.DeleteTrip(idTrip);
-		return ResponseEntity.status(200).body("Trip Deleted");
 
 	}
 
