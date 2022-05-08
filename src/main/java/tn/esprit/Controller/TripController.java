@@ -115,13 +115,17 @@ public class TripController {
 
 		return iTripService.getAllTrip();
 	}
+	@GetMapping("/gettrip/{idTrip}")
+	@ResponseBody
+	public Trip getTripByid(@PathVariable("idTrip") int idTrip ) {
+		return iTripService.FindTripById(idTrip);
+	}
 
 	@DeleteMapping("/deleteTrip/{idTrip}")
 	@ResponseBody
 
-	public ResponseEntity<String> DeleteTrip(@PathVariable("idTrip") int idTrip) {
+	public void DeleteTrip(@PathVariable("idTrip") int idTrip) {
 		iTripService.DeleteTrip(idTrip);
-		return ResponseEntity.status(200).body("Trip Deleted");
 
 	}
 
