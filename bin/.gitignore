@@ -1,9 +1,13 @@
 HELP.md
 target/
+<<<<<<< HEAD
 !mvnw*
 !mvnw.cmd
 
 !mvn
+=======
+!.mvn/wrapper/maven-wrapper.jar
+>>>>>>> origin/amine
 !**/src/main/**/target/
 !**/src/test/**/target/
 

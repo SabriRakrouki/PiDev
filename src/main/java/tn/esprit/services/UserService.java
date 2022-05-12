@@ -1,5 +1,6 @@
 package tn.esprit.services;
 
+<<<<<<< HEAD
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -70,7 +71,9 @@ public class UserService implements IuserService {
 	@Override
 	public List<User> getAllUsers() {
 		// TODO Auto-generated method stub
-		return this.userRepository.findAll();
+		return (List<User>) this.userRepository.findAll();
 	}
+
+
 
 }

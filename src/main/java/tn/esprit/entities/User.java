@@ -1,5 +1,6 @@
 package tn.esprit.entities;
 
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -77,3 +78,4 @@ public abstract class User implements Serializable {
 	private Set<Like> likes;
 
 }
+
