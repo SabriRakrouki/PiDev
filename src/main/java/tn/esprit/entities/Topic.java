@@ -15,6 +15,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,9 +32,10 @@ public class Topic implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(unique = true)
+	
 	private String nameTopic;
-	@OneToOne
-	private Post posts;
+	@OneToMany(mappedBy = "topic",cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<Post> posts;
 
 }

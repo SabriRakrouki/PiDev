@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -64,6 +65,12 @@ public class UserService implements IuserService {
 		// userstaticRepo.save(ofUser);
 
 		return ofUser;
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		// TODO Auto-generated method stub
+		return this.userRepository.findAll();
 	}
 
 }

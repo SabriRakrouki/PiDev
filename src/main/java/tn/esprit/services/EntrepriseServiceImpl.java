@@ -61,7 +61,7 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 
 	@Override
 	public void deleteEntreprise(int id) {
-		// entrepriseRepository.deleteById(id);
+		entrepriseRepository.deleteById(id);
 	}
 
 	@Override

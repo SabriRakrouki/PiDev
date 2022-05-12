@@ -14,9 +14,8 @@ public interface ITopicService {
 
 	void removeTopic(int id);
 
-
-	Topic updateTopic(int idTopic, Topic Topic);
-
 	long count();
+
+	Topic updateTopic(Topic topic);
 
 }

@@ -26,9 +26,9 @@ import lombok.ToString;
 public class Program implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int Id;
-	private Date DateProgram;
-	private String Description;
+	private int id;
+	private Date dateProgram;
+	private String description;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Trip trip;

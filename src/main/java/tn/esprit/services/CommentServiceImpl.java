@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import tn.esprit.entities.*;
 import tn.esprit.repositories.CommentRepository;
-import tn.esprit.repositories.NotificationRepository;
+
 import tn.esprit.repositories.PostRepository;
 import tn.esprit.repositories.UserRepository;
 
@@ -33,15 +33,15 @@ public class CommentServiceImpl implements ICommentService {
 	private final CommentRepository CommentRepository;
 	private final PostRepository postRepository;
 	private final UserRepository userRepository;
-	private final NotificationRepository notificationRepository;
+	
 
 	public CommentServiceImpl(tn.esprit.repositories.CommentRepository commentRepository, PostRepository postRepository,
-			UserRepository userRepository, NotificationRepository notificationRepository) {
+			UserRepository userRepository) {
 
 		CommentRepository = commentRepository;
 		this.postRepository = postRepository;
 		this.userRepository = userRepository;
-		this.notificationRepository = notificationRepository;
+	
 	}
 
 	@Override
@@ -105,10 +105,8 @@ public class CommentServiceImpl implements ICommentService {
 	}
 
 	@Override
-	public Comment updateComment(int idComment, Comment comment) {
-		Comment OldComment = CommentRepository.getById(idComment);
-		OldComment = comment;
-		CommentRepository.save(OldComment);
+	public Comment updateComment( Comment comment) {
+		CommentRepository.save(comment);
 		return comment;
 	}
 

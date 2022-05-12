@@ -1,6 +1,7 @@
 package tn.esprit.repositories;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 
 import tn.esprit.entities.Location;
 import tn.esprit.entities.Trip;
@@ -21,7 +23,7 @@ public Set<Trip> findTripByuser(@Param("user") int user);
 public Set<Trip> findTripByDate(@Param("dateDebut") Date dateDebut,@Param("dateFin") Date dateFin ,@Param("id") int id) ;
 
 
-
+public List<Trip> findByEntrepriseId(int idEntreprise);
 
 
 

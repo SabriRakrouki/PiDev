@@ -58,6 +58,7 @@ import tn.esprit.repositories.EntrepriseRepository;
 import tn.esprit.services.ITripService;
 import tn.esprit.services.LocationService;
 import tn.esprit.services.PDFGeneratorService;
+
 @CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/trip")
@@ -85,7 +86,7 @@ public class TripController {
 	@PostMapping("/addTrip")
 
 	@ResponseBody
-	public Trip addTrip( @RequestBody Trip trip) {
+	public Trip addTrip(@RequestBody Trip trip) {
 		String username;
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof UserDetails) {
@@ -115,9 +116,10 @@ public class TripController {
 
 		return iTripService.getAllTrip();
 	}
+
 	@GetMapping("/gettrip/{idTrip}")
 	@ResponseBody
-	public Trip getTripByid(@PathVariable("idTrip") int idTrip ) {
+	public Trip getTripByid(@PathVariable("idTrip") int idTrip) {
 		return iTripService.FindTripById(idTrip);
 	}
 
@@ -227,4 +229,8 @@ public class TripController {
 
 	}
 
+	@GetMapping("/tripByEntre/{ident}")
+	public List<Trip> getTripByIntre(@PathVariable("ident")int ident) {
+		return iTripService.listTrip(ident);
+	}
 }

@@ -38,7 +38,7 @@ import lombok.ToString;
 public class Trip implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int Id;
+	private int id;
 
 	@ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER )
 	private Location tripLocation;

@@ -42,8 +42,6 @@ public class Like implements Serializable {
 	@ManyToOne
 	private User user;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "notif_id", referencedColumnName = "idNotification")
-	private Notification notif;
+
 
 }

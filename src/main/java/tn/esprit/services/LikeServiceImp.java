@@ -22,17 +22,16 @@ public class LikeServiceImp implements LikesService {
 	
 	private final AdminRepository userRepository;
 	
-	private final NotificationRepository notificationRepository;
+
 	
 	private final LikesRepository likesRepository;
 
 
 
     public LikeServiceImp(PostRepository postRepository, AdminRepository userRepository,
-			NotificationRepository notificationRepository, LikesRepository likesRepository) {
+			 LikesRepository likesRepository) {
 		this.postRepository = postRepository;
 		this.userRepository = userRepository;
-		this.notificationRepository = notificationRepository;
 		this.likesRepository = likesRepository;
 	}
 

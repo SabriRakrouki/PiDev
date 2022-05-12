@@ -39,28 +39,37 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Post implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(unique = true)
+	
 	private int id;
 	
 	   
 	private String subject;
     
    private String content;
-    @Column(nullable = true)
+   
 	private String photo;
-    @Column(nullable = false)
+   
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date DatePost;
+	
 	@OneToMany(mappedBy="posts",cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Set<Comment> comments;
 	
 	@OneToMany(mappedBy="post",cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Set<Like> like;
 
 	
-	 @OneToOne
+	 @ManyToOne
 	 private Topic topic;
 	 
 	 @JsonIgnore

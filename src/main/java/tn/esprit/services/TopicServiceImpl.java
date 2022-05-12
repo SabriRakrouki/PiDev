@@ -44,11 +44,10 @@ public class TopicServiceImpl implements ITopicService {
 	}
 
 	@Override
-	public Topic updateTopic(int idTopic, Topic Topic) {
-		Topic OldTopic = topicRepository.getById(idTopic);
-		OldTopic = Topic;
-		topicRepository.save(OldTopic);
-		return Topic;
+	public Topic updateTopic( Topic topic) {
+		
+		topicRepository.save(topic);
+		return topic;
 	}
 
 	@Override

@@ -2,8 +2,10 @@ package tn.esprit.services;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
 import tn.esprit.entities.StaticOfUser;
+import tn.esprit.entities.User;
 
 public interface IuserService {
 
@@ -13,6 +15,6 @@ public interface IuserService {
 	
 	public StaticOfUser addUserStatic() throws ParseException;
 	
-	
+	public List<User> getAllUsers();
 	
 }

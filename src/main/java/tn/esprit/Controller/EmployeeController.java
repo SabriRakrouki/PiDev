@@ -8,7 +8,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,14 +23,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lowagie.text.DocumentException;
 
 import tn.esprit.entities.Employee;
-import tn.esprit.entities.Location;
+
+import tn.esprit.entities.User;
+import tn.esprit.repositories.UserRepository;
 import tn.esprit.services.IEmployeeService;
+
+
+import tn.esprit.entities.Location;
+
 import tn.esprit.services.LocationService;
 import tn.esprit.services.UserPDFExporter;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/v1/Employe")
+@RequestMapping("/api/v1/Employee")
 public class EmployeeController {
+
 
 	private final IEmployeeService employeeService;
 
@@ -60,7 +69,6 @@ public class EmployeeController {
 
 	}
 
-	// http://localhost:8090/travelup/back/add-employee
 	@PostMapping("/signup/employee")
 	@ResponseBody
 	public void addEmployee(@RequestBody Employee employee) {
@@ -74,6 +82,7 @@ public class EmployeeController {
 		List<Employee> employees = employeeService.retrieveAllEmployee();
 		return employees;
 	}
+
 
 	// http://localhost:8090/travelup/back/remove-employee/3
 	@DeleteMapping("/remove-employee/{employee-id}")
@@ -94,5 +103,4 @@ public class EmployeeController {
 	public Location addBornLocation(@PathVariable("idEmp") int emp, @PathVariable("idLoc") int loc) {
 		return locationService.addLocationToEmployee(loc, emp);
 	}
-
 }

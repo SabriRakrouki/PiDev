@@ -2,6 +2,8 @@ package tn.esprit.Controller;
 
 import java.util.List;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +22,7 @@ import tn.esprit.services.InvitationServiceImpl;
 @RestController
 @RequestMapping("/api/v1/invitation")
 public class InvitationController {
+
 	
 	private final InvitationServiceImpl invitationServiceImpl;
 	
@@ -33,6 +36,7 @@ public class InvitationController {
 
 	@PostMapping("/upload")
 	public void upload(@RequestParam("path") String path) throws Exception {
+		System.out.println(path);
 		invitationServiceImpl.ReadDataFromExcel(path);
 	}
 
@@ -47,7 +51,9 @@ public class InvitationController {
 			username = principal.toString();
 		}
 		User us = userRepository.findByUsername(username).orElse(null);
+
 		int idEntreprise = us.getId();
+		
 		return invitationServiceImpl.retrieveInvitation(idEntreprise);
 	}
 }

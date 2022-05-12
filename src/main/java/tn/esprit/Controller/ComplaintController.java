@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ import tn.esprit.services.IArchiveComplaintsService;
 import tn.esprit.services.IComplaintService;
 import tn.esprit.services.IEntrepriseService;
 import tn.esprit.services.PDFGeneratorService;
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 
 @RequestMapping("api/v1/compaint")
@@ -82,15 +83,9 @@ public class ComplaintController {
 
 	@DeleteMapping("/remove-complaint/{complaint-id}")
 	@ResponseBody
-	public void removeClient(@RequestBody ArchiveComplaints archivecomp,
+	public void removeClient(
 			@PathVariable("complaint-id") Integer complaintId) {
-		Complaint cmp = complaintService.FindComplaintById(complaintId);
-		ArchiveComplaints ar = archivecomplaintsService.AddArchiveComplaint(archivecomp);
-		int idd = ar.getId();
-		ArchiveComplaints archcomp = archivecomplaintsService.FindArchiveComplaintsById(idd);
 
-		archcomp.setComplaint(cmp);
-		// archcomp.getComplaints().add(cmp);
 		complaintService.DeleteComplaint(complaintId);
 
 	}
@@ -111,20 +106,6 @@ public class ComplaintController {
 
 	}
 
-	/*
-	 * public ComplaintController(PDFGeneratorService pdfGeneratorService) {
-	 * this.pdfGeneratorService = pdfGeneratorService; }
-	 * 
-	 * @GetMapping("/pdf/generate") public void generatePDF(HttpServletResponse
-	 * response) throws IOException { response.setContentType("application/pdf");
-	 * DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
-	 * String currentDateTime = dateFormatter.format(new Date());
-	 * 
-	 * String headerKey = "Content-Disposition"; String headerValue =
-	 * "attachment; filename=pdf_" + currentDateTime + ".pdf";
-	 * response.setHeader(headerKey, headerValue);
-	 * 
-	 * this.pdfGeneratorService.export(response); }
-	 */
+	
 
 }

@@ -51,19 +51,16 @@ public class Comment implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateComment;
 
-	@ManyToOne
-	private Post post;
+
 
 	
 
 		
 	@ManyToOne
-	@JoinColumn(name = "the_user_id")
+	
 	private User user;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "notifId")
-	private Notification notification;
+	
 
 	@ManyToOne
 	private Post posts;

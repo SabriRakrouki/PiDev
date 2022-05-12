@@ -120,11 +120,10 @@ public class PostServiceImpl implements IPostService {
 	}
 
 	@Override
-	public Post updatePost(int idPost, Post Post) {
-		Post OldPost = PostRepository.getById(idPost);
-		OldPost = Post;
-		PostRepository.save(OldPost);
-		return Post;
+	public Post updatePost( Post post) {
+	
+		PostRepository.save(post);
+		return post;
 	}
 
 	@Override

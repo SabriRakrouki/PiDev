@@ -7,12 +7,12 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.security.auth.login.CredentialNotFoundException;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +23,11 @@ import tn.esprit.payload.MessageResponse;
 import tn.esprit.repositories.UserRepository;
 import tn.esprit.security.UserDetailsServiceImpl;
 import tn.esprit.security.Utility;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/password")
 public class ForgotPasswordController {
+
 
 	private final JavaMailSender mailSender;
 	private final PasswordEncoder passwordEncoder;
@@ -96,4 +97,5 @@ public class ForgotPasswordController {
 		}
 
 	}
+
 }

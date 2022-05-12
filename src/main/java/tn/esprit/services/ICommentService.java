@@ -18,7 +18,7 @@ public interface ICommentService {
 
 	Comment AddComment(Comment comment);
 
-	Comment updateComment(int idComment, Comment comment);
+	Comment updateComment( Comment comment);
 
 	long count();
 
@@ -29,6 +29,7 @@ public interface ICommentService {
 	List retrieveCooment(int id);
 
 	Comment AjouterEtAffecterCommentToPost(Comment f, int id);
+
 
 	
 	//List<Comment> findByPost(int id_post);

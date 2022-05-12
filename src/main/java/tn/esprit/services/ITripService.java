@@ -21,5 +21,6 @@ public interface ITripService {
 	public Trip AddUserToTrip(int employee, int idtrip);
 
 	public void NoterVoyage(Trip trip, Float Attribution);
+		public List<Trip>listTrip(int id);
 
 }

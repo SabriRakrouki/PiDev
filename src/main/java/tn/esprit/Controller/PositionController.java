@@ -30,15 +30,15 @@ public class PositionController {
 	@PostMapping("/addPosition")
 	@ResponseBody
 	public Position addPosition(@RequestBody Position p) {
-
+		System.out.println(p.getPotionName());
 		return PositionService.AddPosition(p);
 
 	}
 
-	@PutMapping("/updatePosition")
+	@PutMapping("/updatePosition/{id}")
 	@ResponseBody
 	public Position updatePosition(@RequestBody Position d) {
-
+		System.out.println(d.getPotionName());
 		return PositionService.UpdatePosition(d);
 
 	}

@@ -94,5 +94,10 @@ public class TripSerivceImp implements ITripService {
 
 		return trip;
 	}
+	
+	public List<Trip> listTrip(int id){
+		return  tripRepository.findByEntrepriseId(id);
+	}
+	
 
 }

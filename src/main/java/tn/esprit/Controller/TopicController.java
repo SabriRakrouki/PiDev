@@ -57,13 +57,13 @@ public class TopicController {
 	}
 
 	@PutMapping("/updateTopic/{id}")
-	public void updateTopic(@RequestBody Topic topic, int id) {
-		topicService.updateTopic(id, topic);
+	public void updateTopic(@RequestBody Topic topic) {
+		topicService.updateTopic( topic);
 	}
 
-	@DeleteMapping("/remove-topic/{comment-id}")
+	@DeleteMapping("/remove-topic/{id}")
 	@ResponseBody
-	public void deleteTopic(@PathVariable("topic-id") int topicId) {
+	public void deleteTopic(@PathVariable("id") int topicId) {
 
 		topicService.removeTopic(topicId);
 

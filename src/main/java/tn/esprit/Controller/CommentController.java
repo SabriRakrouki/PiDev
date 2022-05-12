@@ -52,7 +52,7 @@ public class CommentController {
 
 	@PostMapping("/addComment")
 	@ResponseBody
-	public Comment AddComment(@RequestBody Comment comment) {
+	public Comment addComment(@RequestBody Comment comment) {
 		return CommentService.AddComment(comment);
 
 	}
@@ -65,8 +65,8 @@ public class CommentController {
 	}
 
 	@PutMapping("/updatecomment/{id}")
-	public void updateComment(@RequestBody Comment comment, int id) {
-		CommentService.updateComment(id, comment);
+	public void updateComment(@RequestBody Comment comment) {
+		CommentService.updateComment( comment);
 	}
 
 	@DeleteMapping("/remove-commment/{comment-id}")

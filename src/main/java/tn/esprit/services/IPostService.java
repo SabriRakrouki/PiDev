@@ -22,7 +22,7 @@ public interface IPostService {
 
 	void removePost(int id);
 
-	Post updatePost(int idPost, Post Post);
+	
 
 	PostResponse  getAllPostsbyPagination(int pageNo, int pageSize, String sortBy, String sortDir);
 
@@ -37,6 +37,8 @@ public interface IPostService {
 	String addlike(int idPost, int idUser);
 
 	void AjouterEtAffecterPostToTopic(Post p, int id);
+
+	Post updatePost(Post post);
 
 
 

@@ -28,9 +28,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
+import tn.esprit.entities.Entreprise;
 import tn.esprit.entities.User;
 import tn.esprit.payload.JwtResponse;
 import tn.esprit.payload.LoginRequest;
@@ -78,5 +80,14 @@ public class AuthController {
 		return ResponseEntity.ok(
 				new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
 	}
+	@GetMapping("/test")
+	@ResponseBody
+	public String test() {
+		
+		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		 System.out.println(auth.getName());
+		return auth.getName();
+	}
+
 
 }
